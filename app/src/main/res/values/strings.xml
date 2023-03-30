@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">laundry_management</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home_fragmnet">Home</string>
+    <string name="sales_fragment">Sales</string>
+    <string name="client_list_fragment">Client</string>
+
+</resources>

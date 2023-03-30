@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="5dp">
+
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/client_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="홍길동"
+            android:textSize="20sp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/client_laundry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="3" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/client_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="2023-03-23" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
