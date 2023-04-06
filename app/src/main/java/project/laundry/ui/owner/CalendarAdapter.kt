@@ -1,4 +1,4 @@
-package project.laundry.ui
+package project.laundry.ui.owner
 
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
@@ -9,10 +9,10 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import project.laundry.R
-import project.laundry.data.dataclass.DateData
+import project.laundry.data.dataclass.DateItems
 import kotlin.collections.ArrayList
 
-class CalendarAdapter(private val dataSet: ArrayList<DateData>): RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
+class CalendarAdapter(private val dataSet: ArrayList<DateItems>): RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
     var drawable: Drawable? = null
     private lateinit var itemClickListener : AdapterView.OnItemClickListener
 

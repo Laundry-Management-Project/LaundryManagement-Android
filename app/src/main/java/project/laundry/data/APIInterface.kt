@@ -1,21 +1,37 @@
 package project.laundry.data
 
-import project.laundry.data.dataclass.LoginPostDTO
-import project.laundry.data.dataclass.LoginResponse
-import project.laundry.data.dataclass.SignUpPostDto
+import project.laundry.data.dataclass.*
 import retrofit2.Call
-import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface APIInterface {
 
-    @POST("signUp")
-    fun postSignUpResponse(@Body signUpPostDto: SignUpPostDto): Call<LoginResponse>
+    @GET ("owner/{uid}/businesses/{buId}/home")
+    fun getOwnerData(
+        @Path("uid") uid:String,
+        @Path("buId") buId:String
+    ) : Call<String>
+    @POST ("owner/{uid}/businesses/add")
+    fun postOwnerData(
+        @Path("uid") uid:String,
+        @Body addStoreDto : AddStoreDto
+    ) : Call<StoreListItems>
 
-    @POST("login")
-    fun postLoginResponse(@Body loginPostDto : LoginPostDTO): Call<LoginResponse>
+    @POST ("customer/{uid}/reservation/add")
+    fun addReservation(
+        @Path("uid") uid:String,
+        @Body rd : AddReservation
+    ) : Call<String>
 
+    @POST("signup/cu")
+    fun postSignUpCuResponse(@Body signUpPostDto: SignUpPostDto): Call<SignUpResponse>
+
+    @POST("signup/ow")
+    fun postSignUpOwResponse(@Body signUpPostDto: SignUpPostDto): Call<SignUpResponse>
+
+    @POST("login/cu")
+    fun postLoginCuResponse(@Body loginPostDto : LoginPostDTO): Call<LoginCuResponse>
+
+    @POST("login/ow")
+    fun postLoginOwResponse(@Body loginPostDto : LoginPostDTO): Call<LoginOwResponse>
 }

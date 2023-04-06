@@ -1,3 +1,3 @@
 package project.laundry.data.dataclass
 
-data class LoginPostDTO(val id :String, val password:String, val userType:String)
+data class LoginPostDTO(val id :String, val password:String)

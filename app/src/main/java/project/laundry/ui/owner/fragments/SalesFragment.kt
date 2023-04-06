@@ -1,4 +1,4 @@
-package project.laundry.ui.fragments
+package project.laundry.ui.owner.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
-import project.laundry.data.dataclass.DateData
+import project.laundry.data.dataclass.DateItems
 import project.laundry.databinding.FragmentSalesBinding
-import project.laundry.ui.CalendarAdapter
+import project.laundry.ui.owner.CalendarAdapter
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -19,7 +19,7 @@ import java.util.*
 class SalesFragment : Fragment() {
     lateinit var binding : FragmentSalesBinding
 
-    val itemList = arrayListOf<DateData>()
+    val itemList = arrayListOf<DateItems>()
     val listAdapter = CalendarAdapter(itemList)
 
     override fun onCreateView(
@@ -52,7 +52,7 @@ class SalesFragment : Fragment() {
             val dayOfWeek: DayOfWeek = date.dayOfWeek
             dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.US)
 
-            itemList.add(DateData(i.toString(), "+33,000"))
+            itemList.add(DateItems(i.toString(), "+33,000"))
         }
         binding.calendarList.adapter = listAdapter
     }

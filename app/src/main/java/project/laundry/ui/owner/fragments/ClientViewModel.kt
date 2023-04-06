@@ -1,4 +1,4 @@
-package project.laundry.ui.fragments
+package project.laundry.ui.owner.fragments
 
 import android.annotation.SuppressLint
 import android.app.Application

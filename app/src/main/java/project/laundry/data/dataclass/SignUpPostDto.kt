@@ -5,6 +5,5 @@ data class SignUpPostDto(
     val password:String,
     val name:String,
     val phone:String,
-    val userType:String //"CU", "OW"
 )
 

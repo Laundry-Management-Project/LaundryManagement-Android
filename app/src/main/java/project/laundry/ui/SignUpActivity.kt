@@ -18,10 +18,14 @@ class SignUpActivity : AppCompatActivity() {
 
         binding.radioGroup.check(binding.radioButtonCustomer.id)
 
-        var userType:String = binding.radioButtonCustomer.text.toString()
+        var userType:String = "CU"
         binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
             val sel = findViewById<RadioButton>(checkedId)
-            userType = sel.text.toString()
+            userType = if(sel.text.toString() == "손님"){
+                "CU"
+            } else {
+                "OW"
+            }
         }
         binding.btnRegister.setOnClickListener {
             viewModel.addUser(
@@ -29,7 +33,8 @@ class SignUpActivity : AppCompatActivity() {
                     binding.etPw.text.toString(),
                     binding.etName.text.toString(),
                     binding.etPhoneNum.text.toString(),
-                    userType)
+                    ),
+                userType
             )
         }
         viewModel.signUpRes.observe(this, Observer { response ->

@@ -1,4 +1,4 @@
-package project.laundry.ui
+package project.laundry.ui.owner
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
