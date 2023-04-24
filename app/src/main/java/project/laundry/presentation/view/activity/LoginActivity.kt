@@ -15,38 +15,17 @@ import project.laundry.presentation.viewmodel.LoginViewModel
 class LoginActivity : AppCompatActivity() {
     lateinit var binding : ActivityLoginBinding
     private val viewModel = LoginViewModel()
-
+    var userType:String = "CU"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
 
-        binding.radioGroup.check(binding.radioButtonCustomer.id)
-
-        var userType:String = "CU"
-
-        binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
-            val sel = findViewById<RadioButton>(checkedId)
-
-            userType = if(sel.text.toString() == "손님"){
-                "CU"
-            } else {
-                "OW"
-            }
-        }
-        binding.btnSignUp.setOnClickListener {
-            val intent = Intent(this, SignUpActivity::class.java)
-            startActivity(intent)
-        }
-        binding.btnLogin.setOnClickListener {
-            viewModel.postLoginResponse(LoginPost(binding.etId.text.toString(), binding.etPw.text.toString(),userType))
-        }
-
+        initView()
 
         viewModel.loginRes.observe(this, Observer { response ->
             Log.d("loginResponse", response.toString())
             if(response.status){
                 if(userType == "OW"){
-                    val intent = Intent(this, StoreListActivity::class.java)
+                    val intent = Intent(this, OwStoresActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
@@ -68,22 +47,28 @@ class LoginActivity : AppCompatActivity() {
             editor.putString("userType", userType)
             editor.commit()
         })
-//        for (i in 0 until binding.layout.childCount) {
-//            val child = binding.layout.getChildAt(i)
-//            if (child is EditText) {
-//                child.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
-//                    val layoutParams = v.layoutParams
-//                    val height = if (hasFocus) 70 else 60
-//                    val heightToPx = height.toPx(this)
-//                    layoutParams.height = heightToPx
-//                    v.layoutParams = layoutParams
-//                }
-//            }
-//        }
+
         setContentView(binding.root)
     }
-//    fun Int.toPx(context: Context): Int {
-//        val scale = context.resources.displayMetrics.density
-//        return (this * scale + 0.5f).toInt()
-//    }
+    private fun initView(){
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+
+        binding.radioGroup.check(binding.radioButtonCustomer.id)
+
+        binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            val sel = findViewById<RadioButton>(checkedId)
+            userType = if(sel.text.toString() == "손님"){
+                "CU"
+            } else {
+                "OW"
+            }
+        }
+        binding.btnSignUp.setOnClickListener {
+            val intent = Intent(this, SignUpActivity::class.java)
+            startActivity(intent)
+        }
+        binding.btnLogin.setOnClickListener {
+            viewModel.postLoginResponse(LoginPost(binding.etId.text.toString(), binding.etPw.text.toString(),userType))
+        }
+    }
 }

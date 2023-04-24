@@ -1,16 +1,15 @@
 package project.laundry.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import project.laundry.data.dataclass.Store
 import project.laundry.data.repository.Repository
 
-class StoreListViewModel : ViewModel() {
+class OwStoresViewModel : ViewModel() {
     val stores : MutableLiveData<ArrayList<Store>> = MutableLiveData()
 
     private val rep = Repository()
-    fun load(uid : String, userType:String){
+    fun loadStores(uid : String, userType:String){
         rep.getStores(userType, uid) { response ->
             response?.let{
                 stores.value=it.stores

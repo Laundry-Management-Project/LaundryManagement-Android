@@ -27,8 +27,9 @@ class Repository() {
                     // 받은 데이터 처리
                     callback(res)
                 } else {
-                    Log.d("loginResponseError",response.errorBody()?.string()!!)
-
+                    Log.d("response", "response is fail - post login")
+                    Log.d("response",response.errorBody()?.string()!!)
+                    callback(null)
                     // API 호출에 실패한 경우
                 }
             }
@@ -55,7 +56,8 @@ class Repository() {
                     // 받은 데이터 처리
                     callback(res)
                 } else {
-                    Log.d("SignUpResponseError",response.errorBody()?.string()!!)
+                    Log.d("response", "response is fail - post sign up")
+                    Log.d("response",response.errorBody()?.string()!!)
                     // API 호출에 실패한 경우
                     callback(null)
                 }
@@ -80,7 +82,9 @@ class Repository() {
                     callback(res)
                 }
                 else{
-                    Log.d("storeError", response.errorBody()?.string()!!)
+                    Log.d("response", "response is fail - add store")
+                    Log.d("response",response.errorBody()?.string()!!)
+                    callback(null)
                 }
             }
 
@@ -96,7 +100,14 @@ class Repository() {
         call.enqueue(object : Callback<Reservation>{
             override fun onResponse(call: Call<Reservation>, response: Response<Reservation>) {
                 val res = response.body()
-                callback(res)
+                if(response.isSuccessful){
+                    callback(res)
+                }
+                else {
+                    Log.d("response", "response is fail - add reservation")
+                    Log.d("response",response.errorBody()?.string()!!)
+                    callback(null)
+                }
             }
             override fun onFailure(call: Call<Reservation>, t: Throwable) {
                 callback(null)
@@ -115,7 +126,14 @@ class Repository() {
         call.enqueue(object : Callback<Stores>{
             override fun onResponse(call: Call<Stores>, response: Response<Stores>) {
                 val res = response.body()
-                callback(res)
+                if(response.isSuccessful){
+                    callback(res)
+                }
+                else {
+                    Log.d("response", "response is fail - get stores")
+                    Log.d("response",response.errorBody()?.string()!!)
+                    callback(null)
+                }
             }
             override fun onFailure(call: Call<Stores>, t: Throwable) {
                 callback(null)
@@ -133,7 +151,14 @@ class Repository() {
         call.enqueue(object : Callback<ArrayList<Reservation>>{
             override fun onResponse(call: Call<ArrayList<Reservation>>, response: Response<ArrayList<Reservation>>) {
                 val res = response.body()
-                callback(res)
+                if(response.isSuccessful){
+                    callback(res)
+                }
+                else {
+                    Log.d("response", "response is fail - get reservation")
+                    Log.d("response",response.errorBody()?.string()!!)
+                    callback(null)
+                }
             }
             override fun onFailure(call: Call<ArrayList<Reservation>>, t: Throwable) {
                 callback(null)
@@ -151,15 +176,58 @@ class Repository() {
         call.enqueue(object : Callback<Store>{
             override fun onResponse(call: Call<Store>, response: Response<Store>) {
                 val res = response.body()
-                callback(res)
+                if(response.isSuccessful){
+                    callback(res)
+                }
+                else {
+                    Log.d("response", "response is fail - get store detail")
+                    Log.d("response",response.errorBody()?.string()!!)
+                    callback(null)
+                }
             }
             override fun onFailure(call: Call<Store>, t: Throwable) {
                 callback(null)
             }
         })
     }
-    fun updateStoreDetail(){
+    fun putReservation(buId:String, reId:String, putResDto: PutReservation, callback: (ArrayList<Reservation>?) -> Unit){
+        val call = myApi.putReservation(buId, reId, putResDto)
+        call.enqueue(object : Callback<ArrayList<Reservation>>{
+            override fun onResponse(call: Call<ArrayList<Reservation>>, response: Response<ArrayList<Reservation>>) {
+                val res = response.body()
+                if(response.isSuccessful){
+                    callback(res)
+                }
+                else {
+                    Log.d("response", "response is fail - put reservation")
+                    Log.d("response",response.errorBody()?.string()!!)
+                    callback(null)
+                }
 
+            }
+
+            override fun onFailure(call: Call<ArrayList<Reservation>>, t: Throwable) {
+                callback(null)
+            }
+        })
+    }
+    fun putStoreDetail(buId:String, uId : String, addStoreDto: AddStore, callback: (Store?) -> Unit){
+        val call = myApi.putStoreDetail(buId, uId, addStoreDto)
+        call.enqueue(object:Callback<Store>{
+            override fun onResponse(call: Call<Store>, response: Response<Store>) {
+                val res = response.body()
+                if(response.isSuccessful){
+                    callback(res)
+                }
+                else{
+                    callback(null)
+                }
+            }
+
+            override fun onFailure(call: Call<Store>, t: Throwable) {
+                callback(null)
+            }
+        })
     }
 
 }

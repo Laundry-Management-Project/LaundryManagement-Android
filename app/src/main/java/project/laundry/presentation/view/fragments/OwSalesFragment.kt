@@ -1,5 +1,6 @@
 package project.laundry.presentation.view.fragments
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import project.laundry.data.dataclass.DateItems
-import project.laundry.databinding.FragmentSalesBinding
+import project.laundry.databinding.FragmentSalesOwBinding
 import project.laundry.presentation.view.CalendarAdapter
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -16,19 +17,23 @@ import java.time.format.TextStyle
 import java.time.temporal.TemporalAdjusters
 import java.util.*
 
-class SalesFragment : Fragment() {
-    lateinit var binding : FragmentSalesBinding
+class OwSalesFragment : Fragment() {
+    lateinit var binding : FragmentSalesOwBinding
 
-    val itemList = arrayListOf<DateItems>()
-    val listAdapter = CalendarAdapter(itemList)
+    private var uid =""
+    private var userType = ""
+
+    private val itemList = arrayListOf<DateItems>()
+    private val listAdapter = CalendarAdapter(itemList)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentSalesBinding.inflate(layoutInflater, container, false)
+        binding = FragmentSalesOwBinding.inflate(layoutInflater, container, false)
 
+        getUserInfo()
 
         binding.monthYearTv.text = LocalDate.now().year.toString() + LocalDate.now().month.toString()
         val mLayoutManager = GridLayoutManager(requireContext(), 7)
@@ -56,6 +61,14 @@ class SalesFragment : Fragment() {
         }
         binding.calendarList.adapter = listAdapter
     }
-    companion object {
+
+    private fun getUserInfo(){
+        val myPref = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE)
+        myPref.getString("uid", "")?.let{
+            uid = it
+        }
+        myPref.getString("userType", "")?.let{
+            userType = it
+        }
     }
 }

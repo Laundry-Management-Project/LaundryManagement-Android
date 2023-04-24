@@ -7,15 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import project.laundry.R
-import project.laundry.databinding.FragmentReservationsBinding
-import project.laundry.presentation.view.ReRecyclerAdapter
-import project.laundry.presentation.viewmodel.ReservationsViewModel
+import project.laundry.databinding.FragmentReservationsCuBinding
+import project.laundry.presentation.view.CuReAdapter
+import project.laundry.presentation.viewmodel.CuReservationsViewModel
 
-class ReservationsFragment : Fragment() {
+class CuReservationsFragment : Fragment() {
 
-    lateinit var binding : FragmentReservationsBinding
-    val viewModel : ReservationsViewModel = ReservationsViewModel()
+    lateinit var binding : FragmentReservationsCuBinding
+    val viewModel : CuReservationsViewModel = CuReservationsViewModel()
 
     private var uid = ""
     private var userType = ""
@@ -24,9 +23,20 @@ class ReservationsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = FragmentReservationsBinding.inflate(layoutInflater, container, false)
+        getUserInfo()
 
+        binding = FragmentReservationsCuBinding.inflate(layoutInflater, container, false)
+        initView()
 
+        viewModel.getReservations(uid, userType)
+        viewModel.reservations.observe(viewLifecycleOwner){reservations ->
+            binding.reRecycler.adapter = CuReAdapter(requireActivity(), reservations)
+        }
+
+        return binding.root
+    }
+
+    private fun getUserInfo(){
         val myPref = requireActivity().getSharedPreferences("User", AppCompatActivity.MODE_PRIVATE)
         myPref.getString("uid", "")?.let{
             uid = it
@@ -34,18 +44,11 @@ class ReservationsFragment : Fragment() {
         myPref.getString("userType", "")?.let{
             userType = it
         }
+    }
 
-        viewModel.getReservations(uid, userType)
+    private fun initView(){
 
         binding.reRecycler.layoutManager = LinearLayoutManager(requireActivity())
 
-        viewModel.reservations.observe(viewLifecycleOwner){reservations ->
-            binding.reRecycler.adapter = ReRecyclerAdapter(requireActivity(), reservations)
-        }
-
-
-        return binding.root
     }
-
-
 }

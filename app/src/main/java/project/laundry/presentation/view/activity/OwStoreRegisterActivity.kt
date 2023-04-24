@@ -20,7 +20,7 @@ import project.laundry.data.dataclass.AddStore
 import project.laundry.databinding.ActivityStoreRegisterBinding
 import project.laundry.presentation.viewmodel.StoreRegisterViewModel
 
-class StoreRegisterActivity : AppCompatActivity(), OnMapReadyCallback {
+class OwStoreRegisterActivity : AppCompatActivity(), OnMapReadyCallback {
     lateinit var binding : ActivityStoreRegisterBinding
 
     private val viewModel = StoreRegisterViewModel()
@@ -29,46 +29,17 @@ class StoreRegisterActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val sharedPreference = getSharedPreferences("User", MODE_PRIVATE)
-        sharedPreference.getString("uid", "")?.let{
-            uid = it
-            if(uid == ""){
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-        }
-        binding = ActivityStoreRegisterBinding.inflate(layoutInflater)
+        getUserInfo()
+        initView()
 
-        binding.topAppBar.setNavigationOnClickListener {
-            onBackPressed()
-        }
-        val fm = supportFragmentManager
-        val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
-            ?: MapFragment.newInstance().also {
-                fm.beginTransaction().add(R.id.map, it).commit()
-            }
-        mapFragment?.getMapAsync(this)
-
-        binding.btnRegister.setOnClickListener {
-            val addStoreDto = AddStore(
-                binding.etStoreAddress.text.toString(),
-                binding.etBuHours.text.toString(),
-                binding.etStoreName.text.toString(),
-                binding.etContact.text.toString(),
-                binding.etIntro.text.toString()
-            )
-            viewModel.addStore(uid, addStoreDto)
-        }
-        viewModel.storeList.observe(this, Observer { storeList ->
-            if(storeList!=null){
-                val returnIntent = Intent(this, StoreListActivity::class.java)
-//                returnIntent.putExtra("storeItem", storeList)
-                returnIntent.putExtra("test", "test")
-                setResult(RESULT_OK, returnIntent)
+        viewModel.store.observe(this, Observer { store ->
+            if(store.bu_id.isNotEmpty()){
+                val returnIntent = Intent(this, OwStoresActivity::class.java)
+                returnIntent.putExtra("store", store)
                 finish()
             }
         })
+
         setContentView(binding.root)
 
         fun init_webViewDialog(){
@@ -105,4 +76,39 @@ class StoreRegisterActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
+    private fun getUserInfo(){
+        val myPref = getSharedPreferences("User", MODE_PRIVATE)
+        myPref.getString("uid", "")?.let{
+            uid = it
+            if(uid == ""){
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        }
+    }
+    private fun initView(){
+        binding = ActivityStoreRegisterBinding.inflate(layoutInflater)
+
+        binding.topAppBar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+        val fm = supportFragmentManager
+        val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
+            ?: MapFragment.newInstance().also {
+                fm.beginTransaction().add(R.id.map, it).commit()
+            }
+        mapFragment?.getMapAsync(this)
+
+        binding.btnRegister.setOnClickListener {
+            val addStoreDto = AddStore(
+                binding.etStoreAddress.text.toString(),
+                binding.etBuHours.text.toString(),
+                binding.etStoreName.text.toString(),
+                binding.etContact.text.toString(),
+                binding.etIntro.text.toString()
+            )
+            viewModel.addStore(uid, addStoreDto)
+        }
+    }
 }

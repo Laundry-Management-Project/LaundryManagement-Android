@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import project.laundry.data.dataclass.Reservation
 import project.laundry.data.repository.Repository
 
-class ReservationsViewModel : ViewModel() {
+class CuReservationsViewModel : ViewModel() {
 
     val reservations : MutableLiveData<ArrayList<Reservation>> = MutableLiveData()
     val rep = Repository()

@@ -5,29 +5,29 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import project.laundry.R
 import project.laundry.databinding.ActivityCustomerMainBinding
-import project.laundry.presentation.view.fragments.StoresFragmnet
-import project.laundry.presentation.view.fragments.ReservationsFragment
+import project.laundry.presentation.view.fragments.CuStoresFragmnet
+import project.laundry.presentation.view.fragments.CuReservationsFragment
 
 class CustomerMainActivity : AppCompatActivity() {
     lateinit var binding : ActivityCustomerMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        initView()
+
+        setContentView(binding.root)
+    }
+    private fun initView(){
         binding = ActivityCustomerMainBinding.inflate(layoutInflater)
 
-
-
-        val storesFragmnet = StoresFragmnet()
-
-        val reservationsFragment = ReservationsFragment()
-
-        val fragList = mutableListOf(storesFragmnet, reservationsFragment)
-
+        val cuStoresFragmnet = CuStoresFragmnet()
+        val cuReservationsFragment = CuReservationsFragment()
+        val fragList = mutableListOf(cuStoresFragmnet, cuReservationsFragment)
         var currentFragment: Fragment?=fragList[0]
 
         supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragList[0]).commit()
         supportFragmentManager.beginTransaction().show(fragList[0]).commit()
-
 
         binding.bottomNavigation.setOnItemSelectedListener() { item ->
             val index = when (item.itemId) {
@@ -49,6 +49,5 @@ class CustomerMainActivity : AppCompatActivity() {
             }
             true
         }
-        setContentView(binding.root)
     }
 }

@@ -8,11 +8,13 @@ import project.laundry.data.repository.Repository
 
 class AddReservationViewModel : ViewModel() {
     val myReservation : MutableLiveData<Reservation> = MutableLiveData()
-    val rep = Repository()
+    private val rep = Repository()
 
     fun addReservation(uid:String, buid:String,  rd:AddReservation){
         rep.addReservation(uid, buid, rd){ response ->
-            myReservation.value = response
+            response?.let{
+                myReservation.value = it
+            }
         }
     }
 }

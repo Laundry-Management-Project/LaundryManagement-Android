@@ -9,14 +9,14 @@ import project.laundry.data.repository.Repository
 
 class StoreRegisterViewModel : ViewModel() {
 
-    val storeList : MutableLiveData<Store> = MutableLiveData()
+    val store : MutableLiveData<Store> = MutableLiveData()
     private val rep = Repository()
 
     fun addStore(uid : String, addStoreDto: AddStore) {
 
         rep.addStore(uid, addStoreDto) { response ->
             if(response!=null){
-                storeList.value = response
+                store.value = response
                 Log.d("addStore", response.toString())
             }
             else{

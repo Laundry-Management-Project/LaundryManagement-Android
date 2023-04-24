@@ -18,10 +18,10 @@ class StoreDetailViewModel : ViewModel() {
             }
         }
     }
-    fun addReservation(uid : String, buId:String, rd : AddReservation){
-        rep.addReservation(uid , buId, rd) {response->
-            val result = response
-        }
+
+    fun putStoreDetail(){
+
     }
+
 
 }

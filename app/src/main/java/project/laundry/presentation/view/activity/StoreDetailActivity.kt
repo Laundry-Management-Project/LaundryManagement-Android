@@ -15,8 +15,8 @@ class StoreDetailActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityStoreDetailBinding
     private val viewModel = StoreDetailViewModel()
-    lateinit var uid :String
-    lateinit var buId : String
+    var uid = ""
+    var buId = ""
     lateinit var userType : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +30,9 @@ class StoreDetailActivity : AppCompatActivity() {
         }
 
         initView()
+        if(userType == "OW"){
+            //수정할 수 있는 버튼 및 화면 구성
+        }
 
         viewModel.loadDetail(userType, buId)
         viewModel.store.observe(this){store ->

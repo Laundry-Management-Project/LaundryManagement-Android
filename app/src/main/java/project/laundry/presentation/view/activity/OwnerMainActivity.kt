@@ -1,26 +1,46 @@
 package project.laundry.presentation.view.activity
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import project.laundry.R
-import project.laundry.databinding.ActivityMainBinding
-import project.laundry.presentation.view.fragments.LaundryListFragment
-import project.laundry.presentation.view.fragments.HomeFragment
-import project.laundry.presentation.view.fragments.SalesFragment
+import project.laundry.databinding.ActivityMainOwnerBinding
+import project.laundry.presentation.view.fragments.OwReservationsFragment
+import project.laundry.presentation.view.fragments.OwHomeFragment
+import project.laundry.presentation.view.fragments.OwSalesFragment
 
 class OwnerMainActivity : AppCompatActivity() {
 
-    lateinit var binding : ActivityMainBinding
-    lateinit var uid : String
+    lateinit var binding : ActivityMainOwnerBinding
+    var uid = ""
+    var buId = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        initView()
+        setContentView(binding.root)
+    }
+    private fun initView(){
+        binding = ActivityMainOwnerBinding.inflate(layoutInflater)
 
-        val fragList = mutableListOf(HomeFragment(), SalesFragment(), LaundryListFragment())
+        val intent = intent
+        intent.getStringExtra("bu_id")?.let{
+            buId = it
+        }
+
+        val bundle = Bundle().apply {
+            putString("bu_id", buId)
+        }
+        //buid넘기기
+        val owHomeFragment = OwHomeFragment()
+        owHomeFragment.arguments = bundle
+        val owSalesFragment = OwSalesFragment()
+        owSalesFragment.arguments = bundle
+        val owReservationsFragment = OwReservationsFragment()
+        owReservationsFragment.arguments = bundle
+
+        val fragList = mutableListOf(owHomeFragment, owSalesFragment, owReservationsFragment)
+
         supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragList[0]).commit()
         supportFragmentManager.beginTransaction().show(fragList[0]).commit()
         var currentFragment: Fragment?=fragList[0]
@@ -45,6 +65,5 @@ class OwnerMainActivity : AppCompatActivity() {
             }
             true
         }
-        setContentView(binding.root)
     }
 }

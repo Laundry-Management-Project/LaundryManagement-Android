@@ -9,7 +9,7 @@ import project.laundry.data.dataclass.Store
 import project.laundry.databinding.BuRecyclerItemBinding
 import project.laundry.presentation.view.activity.StoreDetailActivity
 
-class BuRecyclerAdapter(private val ctx : Context, private val items : ArrayList<Store>) : RecyclerView.Adapter<BuRecyclerAdapter.ViewHolder>() {
+class CuStoresAdapter(private val ctx : Context, private val items : ArrayList<Store>) : RecyclerView.Adapter<CuStoresAdapter.ViewHolder>() {
     class ViewHolder(val binding : BuRecyclerItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(ctx :Context, item: Store){
             binding.storeName.text = item.name

@@ -22,11 +22,11 @@
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="z8g22aynj8" />
         <activity
-            android:name=".presentation.view.activity.StoreRegisterActivity"
+            android:name=".presentation.view.activity.OwStoreRegisterActivity"
             android:exported="true"
             android:theme="@style/Theme.Material3.Light.NoActionBar"/>
         <activity
-            android:name=".presentation.view.activity.StoreListActivity"
+            android:name=".presentation.view.activity.OwStoresActivity"
             android:exported="true"
             android:theme="@style/Theme.Material3.Light.NoActionBar">
 
@@ -53,10 +53,6 @@
         </activity>
         <activity
             android:name=".presentation.view.activity.CustomerMainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Material3.Light.NoActionBar" />
-        <activity
-            android:name=".presentation.view.activity.ClientDetailActivity"
             android:exported="true"
             android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity

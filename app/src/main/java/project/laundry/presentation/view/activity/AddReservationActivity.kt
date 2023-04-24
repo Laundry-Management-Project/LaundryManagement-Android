@@ -8,11 +8,12 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import project.laundry.R
 import project.laundry.data.dataclass.AddReservation
-import project.laundry.databinding.ActivityLaundryRegisterBinding
+import project.laundry.databinding.ActivityReservationAddBinding
+
 import project.laundry.presentation.viewmodel.AddReservationViewModel
 
 class AddReservationActivity : AppCompatActivity() {
-    lateinit var binding : ActivityLaundryRegisterBinding
+    lateinit var binding : ActivityReservationAddBinding
     lateinit var uid : String
     lateinit var buId : String
     lateinit var userType:String
@@ -30,6 +31,13 @@ class AddReservationActivity : AppCompatActivity() {
 
         initView()
 
+        viewModel.myReservation.observe(this){ reservation ->
+            if(reservation.re_id.isNotEmpty()){
+//                val returnIntent = Intent(this, StoreDetailActivity::class.java)
+//                setResult(RESULT_OK, returnIntent)
+                finish()
+            }
+        }
 
 
         setContentView(binding.root)
@@ -44,7 +52,7 @@ class AddReservationActivity : AppCompatActivity() {
         }
     }
     private fun initView(){
-        binding = ActivityLaundryRegisterBinding.inflate(layoutInflater)
+        binding = ActivityReservationAddBinding.inflate(layoutInflater)
 
         binding.topAppBar.setNavigationOnClickListener {
             onBackPressed()
@@ -68,11 +76,10 @@ class AddReservationActivity : AppCompatActivity() {
         }
 
         binding.btnRegister.setOnClickListener {
-            val returnIntent = Intent(this, StoreDetailActivity::class.java)
+
             val rd = AddReservation(binding.etDetails.text.toString(), binding.etClothingType.text.toString(),laundryNum)
             viewModel.addReservation(uid, buId, rd)
-            setResult(RESULT_OK, returnIntent)
-            finish()
+
         }
     }
 }

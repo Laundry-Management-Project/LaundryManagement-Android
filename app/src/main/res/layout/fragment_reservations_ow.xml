@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.view.fragments.LaundryListFragment"
+    tools:context=".presentation.view.fragments.OwReservationsFragment"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                 android:text="등록 날짜" />
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/client_recycler"
+            android:id="@+id/reservations_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="5dp"/>

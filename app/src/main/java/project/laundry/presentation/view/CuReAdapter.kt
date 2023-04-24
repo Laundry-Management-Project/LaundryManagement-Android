@@ -6,12 +6,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import project.laundry.data.dataclass.Reservation
-import project.laundry.databinding.BuRecyclerItemBinding
-import project.laundry.databinding.ReRecyclerItemBinding
+import project.laundry.databinding.CuReRecyclerItemBinding
 import project.laundry.presentation.view.activity.StoreDetailActivity
 
-class ReRecyclerAdapter(val ctx : Context, val items : ArrayList<Reservation>) : RecyclerView.Adapter<ReRecyclerAdapter.ViewHolder>() {
-    class ViewHolder(val binding : ReRecyclerItemBinding) : RecyclerView.ViewHolder(binding.root) {
+class CuReAdapter(val ctx : Context, val items : ArrayList<Reservation>) : RecyclerView.Adapter<CuReAdapter.ViewHolder>() {
+    class ViewHolder(val binding : CuReRecyclerItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(ctx : Context, item : Reservation){
             binding.clothingType.text = item.clothing_type
             binding.storeName.text = item.bu_name
@@ -26,12 +25,12 @@ class ReRecyclerAdapter(val ctx : Context, val items : ArrayList<Reservation>) :
             }
         }
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReRecyclerAdapter.ViewHolder {
-        val binding = ReRecyclerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ReRecyclerAdapter.ViewHolder(binding)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CuReAdapter.ViewHolder {
+        val binding = CuReRecyclerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return CuReAdapter.ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ReRecyclerAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CuReAdapter.ViewHolder, position: Int) {
         val item = items[position]
         holder.bind(ctx, item)
     }

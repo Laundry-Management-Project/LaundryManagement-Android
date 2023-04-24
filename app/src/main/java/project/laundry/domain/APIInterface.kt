@@ -64,7 +64,7 @@ interface APIInterface {
         @Path("buId") buId:String,
         @Path("reId") reId:String,
         @Body putResDto : PutReservation
-    ) : Call<Reservation>
+    ) : Call<ArrayList<Reservation>>
 
     // 로그인 및 회원가입
     @POST("signup/cu")
