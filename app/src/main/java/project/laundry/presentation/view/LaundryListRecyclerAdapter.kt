@@ -1,4 +1,4 @@
-package project.laundry.presentation.owner
+package project.laundry.presentation.view
 
 import android.content.Context
 import android.content.Intent
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import project.laundry.data.dataclass.ClientData
 import project.laundry.databinding.ClientRecyclerItemBinding
+import project.laundry.presentation.view.activity.ClientDetailActivity
 
 class LaundryListRecyclerAdapter(private val ctx: Context, private val myClients : List<ClientData>) : RecyclerView.Adapter<LaundryListRecyclerAdapter.ViewHolder>(){
     class ViewHolder(private val binding : ClientRecyclerItemBinding):RecyclerView.ViewHolder(binding.root){

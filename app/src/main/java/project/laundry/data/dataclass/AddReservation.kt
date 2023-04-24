@@ -1,8 +1,8 @@
 package project.laundry.data.dataclass
 
 data class AddReservation(
-    val bu_id : String,
-    val clothCount : String,
-    val content : String
-) : java.io.Serializable
+    val request_detail : String,
+    val clothing_type : String,
+    val num : Int,
+)
 

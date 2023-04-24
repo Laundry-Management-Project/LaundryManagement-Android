@@ -1,4 +1,4 @@
-package project.laundry.presentation.view
+package project.laundry.presentation.view.activity
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -8,9 +8,8 @@ import android.util.Log
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import project.laundry.data.dataclass.LoginPostDTO
+import project.laundry.data.dataclass.LoginPost
 import project.laundry.databinding.ActivityLoginBinding
-import project.laundry.presentation.owner.StoreListActivity
 import project.laundry.presentation.viewmodel.LoginViewModel
 
 class LoginActivity : AppCompatActivity() {
@@ -39,30 +38,23 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.btnLogin.setOnClickListener {
-            viewModel.postLoginResponse(LoginPostDTO(binding.etId.text.toString(), binding.etPw.text.toString()),userType)
+            viewModel.postLoginResponse(LoginPost(binding.etId.text.toString(), binding.etPw.text.toString(),userType))
         }
 
 
-        viewModel.loginCuRes.observe(this, Observer { response ->
+        viewModel.loginRes.observe(this, Observer { response ->
             Log.d("loginResponse", response.toString())
             if(response.status){
-                val intent = Intent(this, CustomerMainActivity::class.java)
-                intent.putExtra("loginCu", response)
-                startActivity(intent)
-                finish()
-            }
-            else{
-                Toast.makeText(this, response.message, Toast.LENGTH_LONG).show()
-            }
-        })
-        viewModel.loginOwRes.observe(this, Observer { response ->
-            Log.d("loginResponse", response.toString())
-            if(response.status){
-                val intent = Intent(this, StoreListActivity::class.java)
-                Log.d("loginToMain", response.toString())
-                intent.putExtra("loginOw", response)
-                startActivity(intent)
-                finish()
+                if(userType == "OW"){
+                    val intent = Intent(this, StoreListActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+                else if(userType == "CU"){
+                    val intent = Intent(this, CustomerMainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             }
             else{
                 Toast.makeText(this, response.message, Toast.LENGTH_LONG).show()
@@ -73,6 +65,7 @@ class LoginActivity : AppCompatActivity() {
             val sharedPreference = getSharedPreferences("User", MODE_PRIVATE)
             val editor  : SharedPreferences.Editor = sharedPreference.edit()
             editor.putString("uid",uid)
+            editor.putString("userType", userType)
             editor.commit()
         })
 //        for (i in 0 until binding.layout.childCount) {

@@ -1,6 +1,6 @@
 package project.laundry.data.dataclass
 
-data class AddStoreDto(
+data class AddStore(
     val address:String,
     val bu_hour:String,
     val name:String,

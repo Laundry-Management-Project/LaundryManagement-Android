@@ -1,4 +1,4 @@
-package project.laundry.data
+package project.laundry.domain
 
 import project.laundry.data.dataclass.*
 import retrofit2.Call
@@ -6,32 +6,73 @@ import retrofit2.http.*
 
 interface APIInterface {
 
-    @GET ("owner/{uid}/businesses/{buId}/home")
-    fun getOwnerData(
-        @Path("uid") uid:String,
+    //  손님
+    @GET ("customer/reservations")
+    fun getReservationToCu(
+        @Query("uid") uid:String,
+    ) : Call<ArrayList<Reservation>>
+    @GET ("customer/businesses")
+    fun getStoresToCu(
+        @Query("uid") uid:String
+    ) : Call<Stores>
+
+    @GET ("customer/{buId}")
+    fun getStoreDetailToCu(
         @Path("buId") buId:String
-    ) : Call<String>
-    @POST ("owner/{uid}/businesses/add")
-    fun postOwnerData(
-        @Path("uid") uid:String,
-        @Body addStoreDto : AddStoreDto
-    ) : Call<StoreListItems>
+    ) : Call<Store>
 
-    @POST ("customer/{uid}/reservation/add")
-    fun addReservation(
-        @Path("uid") uid:String,
+    @POST (" customer/{buId}/reservation")
+    fun postReservation(
+        @Path("buId") bu_id:String,
+        @Query("uid") uid : String,
         @Body rd : AddReservation
-    ) : Call<String>
+    ) : Call<Reservation>
 
+
+
+    // 사장
+    @GET ("owner/businesses")
+    fun getStoresToOw(
+        @Query("uid") uid:String
+    ) : Call<Stores>
+
+    @POST ("owner/business/add")
+    fun postStore(
+        @Query("uid") uid:String,
+        @Body addStoreDto : AddStore
+    ) : Call<Store>
+
+    @GET ("owner/{buId}/reservations")
+    fun getReservationToOw(
+        @Path("buId") buId:String
+    ) : Call<ArrayList<Reservation>>
+
+    @GET ("owner/{buId}/detail")
+    fun getStoreDetailToOw(
+        @Path("buId") buId:String
+    ) : Call<Store>
+
+    @PUT ("owner/{buId}/update")
+    fun putStoreDetail(
+        @Path("buId") buId:String,
+        @Query("uId") uid:String,
+        @Body addStoreDto : AddStore
+    ) : Call<Store>
+
+    @PUT ("owner/{buId}/reservations/{reId}}")
+    fun putReservation(
+        @Path("buId") buId:String,
+        @Path("reId") reId:String,
+        @Body putResDto : PutReservation
+    ) : Call<Reservation>
+
+    // 로그인 및 회원가입
     @POST("signup/cu")
-    fun postSignUpCuResponse(@Body signUpPostDto: SignUpPostDto): Call<SignUpResponse>
+    fun postSignUpCu(@Body signUpPostDto: SignUpPost): Call<LoginResponse>
 
     @POST("signup/ow")
-    fun postSignUpOwResponse(@Body signUpPostDto: SignUpPostDto): Call<SignUpResponse>
+    fun postSignUpOw(@Body signUpPostDto: SignUpPost): Call<LoginResponse>
 
-    @POST("login/cu")
-    fun postLoginCuResponse(@Body loginPostDto : LoginPostDTO): Call<LoginCuResponse>
-
-    @POST("login/ow")
-    fun postLoginOwResponse(@Body loginPostDto : LoginPostDTO): Call<LoginOwResponse>
+    @POST("login")
+    fun postLogin(@Body loginPostDto : LoginPost): Call<LoginResponse>
 }

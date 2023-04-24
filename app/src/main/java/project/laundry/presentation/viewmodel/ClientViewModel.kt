@@ -1,4 +1,4 @@
-package project.laundry.presentation.owner.fragments
+package project.laundry.presentation.viewmodel
 
 import android.annotation.SuppressLint
 import android.app.Application

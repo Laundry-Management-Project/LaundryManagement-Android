@@ -1,20 +1,25 @@
-package project.laundry.presentation.owner
+package project.laundry.presentation.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import project.laundry.data.dataclass.StoreListItems
+import project.laundry.data.dataclass.Store
+import project.laundry.data.repository.Repository
 
 class StoreListViewModel : ViewModel() {
-    val storeListItems : MutableLiveData<List<StoreListItems>> = MutableLiveData()
-    private val mStoreListItems : ArrayList<StoreListItems> = ArrayList()
+    val stores : MutableLiveData<ArrayList<Store>> = MutableLiveData()
 
-    fun load(items:List<StoreListItems>){
-        storeListItems.value=items
+    private val rep = Repository()
+    fun load(uid : String, userType:String){
+        rep.getStores(userType, uid) { response ->
+            response?.let{
+                stores.value=it.stores
+            }
+        }
     }
-    fun addStoreItem(item:StoreListItems){
-        mStoreListItems.add(item)
-        storeListItems.value = mStoreListItems
-        Log.d("addStore_StoreList", item.toString())
+    fun addStoreItem(item: Store){
+//        mStoreListItems.add(item)
+//        stores.value = mStoreListItems
+//        Log.d("addStore_StoreList", item.toString())
     }
 }

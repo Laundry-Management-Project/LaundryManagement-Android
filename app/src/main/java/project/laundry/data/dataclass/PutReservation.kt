@@ -1,3 +1,6 @@
 package project.laundry.data.dataclass
 
-data class putReservation()
+data class PutReservation(
+    val price : String,
+    val cloth_status : String
+)

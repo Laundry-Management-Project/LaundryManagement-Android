@@ -1,14 +1,12 @@
-package project.laundry.presentation.view
+package project.laundry.presentation.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import project.laundry.R
-import project.laundry.data.dataclass.LoginCuResponse
 import project.laundry.databinding.ActivityCustomerMainBinding
-import project.laundry.presentation.view.fragments.MapFragment
-import project.laundry.presentation.view.fragments.SettingFragment
+import project.laundry.presentation.view.fragments.StoresFragmnet
+import project.laundry.presentation.view.fragments.ReservationsFragment
 
 class CustomerMainActivity : AppCompatActivity() {
     lateinit var binding : ActivityCustomerMainBinding
@@ -17,18 +15,15 @@ class CustomerMainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCustomerMainBinding.inflate(layoutInflater)
 
-        val intent = intent
-        val loginRes = intent.getSerializableExtra("loginCu") as LoginCuResponse?
 
 
+        val storesFragmnet = StoresFragmnet()
 
-        Log.d("login", loginRes.toString())
-        val fragList = mutableListOf(MapFragment(), SettingFragment())
+        val reservationsFragment = ReservationsFragment()
+
+        val fragList = mutableListOf(storesFragmnet, reservationsFragment)
 
         var currentFragment: Fragment?=fragList[0]
-        val bundle = Bundle()
-        bundle.putSerializable("login", loginRes)
-        currentFragment?.arguments = bundle
 
         supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragList[0]).commit()
         supportFragmentManager.beginTransaction().show(fragList[0]).commit()
@@ -49,9 +44,7 @@ class CustomerMainActivity : AppCompatActivity() {
                         supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment).commit()
                     }
                     supportFragmentManager.beginTransaction().show(fragment).commit()
-                    val bundle = Bundle()
-                    bundle.putSerializable("login", loginRes)
-                    currentFragment?.arguments = bundle
+//                    currentFragment?.arguments = bundle
                 }
             }
             true

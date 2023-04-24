@@ -1,6 +1,6 @@
 package project.laundry.data.dataclass
 
-data class SignUpPostDto(
+data class SignUpPost(
     val id :String,
     val password:String,
     val name:String,

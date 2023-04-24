@@ -13,4 +13,23 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="edit_text_style" parent="Widget.Material3.TextInputLayout.FilledBox">
+        <item name="android:background">@drawable/rounded_rectangle</item>
+        <item name="android:layout_height">@dimen/dimen_text_filed_height_dp</item>
+        <item name="android:textSize">@dimen/dimen_text_size_sp</item>
+        <item name="android:gravity">top</item>
+        <item name="android:layout_marginTop">12dp</item>
+    </style>
+    <style name="btn_style" parent="ShapeAppearanceOverlay.Material3.Button">
+        <item name="android:layout_height">@dimen/dimen_btn_height_dp</item>
+        <item name="cornerRadius">10dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="text_Style" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
 </resources>

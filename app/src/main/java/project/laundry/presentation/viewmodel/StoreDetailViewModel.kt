@@ -1,14 +1,25 @@
-package project.laundry.presentation.customer.viewmodel
+package project.laundry.presentation.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import project.laundry.data.dataclass.AddReservation
+import project.laundry.data.dataclass.Store
 import project.laundry.data.repository.Repository
 
 class StoreDetailViewModel : ViewModel() {
 
-    fun addReservation(uid : String, rd : AddReservation){
-        val rep = Repository()
-        rep.addReservation(uid , rd) {response->
+    val store : MutableLiveData<Store> = MutableLiveData()
+    private val rep = Repository()
+    fun loadDetail(userType:String, sid:String){
+        rep.getStoreDetail(userType, sid){ response ->
+            response?.let{
+                store.value = response
+            }
+        }
+    }
+    fun addReservation(uid : String, buId:String, rd : AddReservation){
+        rep.addReservation(uid , buId, rd) {response->
             val result = response
         }
     }

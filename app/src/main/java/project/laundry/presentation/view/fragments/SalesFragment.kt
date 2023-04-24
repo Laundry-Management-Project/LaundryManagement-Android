@@ -1,4 +1,4 @@
-package project.laundry.presentation.owner.fragments
+package project.laundry.presentation.view.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import project.laundry.data.dataclass.DateItems
 import project.laundry.databinding.FragmentSalesBinding
-import project.laundry.presentation.owner.CalendarAdapter
+import project.laundry.presentation.view.CalendarAdapter
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

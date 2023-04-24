@@ -1,11 +1,11 @@
-package project.laundry.presentation.view
+package project.laundry.presentation.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import project.laundry.data.dataclass.SignUpPostDto
+import project.laundry.data.dataclass.SignUpPost
 import project.laundry.databinding.ActivitySignUpBinding
 import project.laundry.presentation.viewmodel.SignUpViewModel
 
@@ -34,7 +34,7 @@ class SignUpActivity : AppCompatActivity() {
         }
         binding.btnRegister.setOnClickListener {
             viewModel.addUser(
-                SignUpPostDto(binding.etId.text.toString(),
+                SignUpPost(binding.etId.text.toString(),
                     binding.etPw.text.toString(),
                     binding.etName.text.toString(),
                     binding.etPhoneNum.text.toString(),

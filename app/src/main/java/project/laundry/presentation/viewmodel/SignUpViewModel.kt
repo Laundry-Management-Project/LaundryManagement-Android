@@ -1,20 +1,20 @@
-package project.laundry.presentation
+package project.laundry.presentation.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import project.laundry.data.dataclass.SignUpPostDto
-import project.laundry.data.dataclass.SignUpResponse
+import project.laundry.data.dataclass.LoginResponse
+import project.laundry.data.dataclass.SignUpPost
 import project.laundry.data.repository.Repository
 
 class SignUpViewModel : ViewModel() {
 
-    val signUpRes : MutableLiveData<SignUpResponse> = MutableLiveData()
+    val signUpRes : MutableLiveData<LoginResponse> = MutableLiveData()
 
-    fun addUser(signUpPost: SignUpPostDto, userType:String){
+    fun addUser(signUpPost: SignUpPost, userType:String){
         val rep = Repository()
 
-        rep.postSignUpInfo(userType, signUpPost) { response ->
+        rep.postSignUp(userType, signUpPost) { response ->
             if(response != null){
                 signUpRes.value = response
             }

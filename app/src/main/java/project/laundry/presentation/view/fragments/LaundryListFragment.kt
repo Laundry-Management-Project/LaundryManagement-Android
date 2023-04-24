@@ -1,4 +1,4 @@
-package project.laundry.presentation.owner.fragments
+package project.laundry.presentation.view.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -8,7 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import project.laundry.databinding.FragmentClientListBinding
-import project.laundry.presentation.owner.LaundryListRecyclerAdapter
+import project.laundry.presentation.view.LaundryListRecyclerAdapter
+import project.laundry.presentation.viewmodel.ClientViewModel
 
 class LaundryListFragment : Fragment() {
 

@@ -1,15 +1,21 @@
 package project.laundry.data.dataclass
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Reservation(
-    @SerializedName("bu_address") val bu_address : String,
-    @SerializedName("bu_name") val bu_name : String,
-    @SerializedName("clothCount") val clothCount : String,
-    @SerializedName("clothStatus") val clothStatus : String,
-    @SerializedName("content") val content : String,
-    @SerializedName("cu_name") val cu_name : String,
-    @SerializedName("rid") val rid : String,
-    @SerializedName("bu_id") val bu_id:String,
-    @SerializedName("createdAt") val createdAt : String
-)
+    val re_id : String,
+    val bu_id : String,
+    val cu_id : String,
+    val cu_name : String,
+    val bu_name : String,
+    val bu_address : String,
+    val num : Int,
+    val cu_phone:String,
+    val contact : String,
+    val cloth_status : String,
+    val price : Int,
+    val clothing_type : String,
+    val request_detail : String,
+    val createdAt : String
+    ) : Serializable

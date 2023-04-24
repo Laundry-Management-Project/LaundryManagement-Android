@@ -1,4 +1,4 @@
-package project.laundry.presentation.owner
+package project.laundry.presentation.view
 
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater

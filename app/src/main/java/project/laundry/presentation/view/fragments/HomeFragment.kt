@@ -1,4 +1,4 @@
-package project.laundry.presentation.owner.fragments
+package project.laundry.presentation.view.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

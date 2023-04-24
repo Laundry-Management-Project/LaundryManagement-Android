@@ -9,26 +9,47 @@ import android.widget.ArrayAdapter
 import project.laundry.R
 import project.laundry.data.dataclass.AddReservation
 import project.laundry.databinding.ActivityLaundryRegisterBinding
+import project.laundry.presentation.viewmodel.AddReservationViewModel
 
-class LaundryRegisterActivity : AppCompatActivity() {
+class AddReservationActivity : AppCompatActivity() {
     lateinit var binding : ActivityLaundryRegisterBinding
     lateinit var uid : String
-    lateinit var sid : String
+    lateinit var buId : String
+    lateinit var userType:String
+
+    private val viewModel = AddReservationViewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        getUserInfo()
+
+        val intent = intent
+        intent.getStringExtra("bu_id")?.let{
+            buId = it
+        }
+
+        initView()
+
+
+
+        setContentView(binding.root)
+    }
+    private fun getUserInfo(){
+        val myPref = getSharedPreferences("User", MODE_PRIVATE)
+        myPref.getString("uid", "")?.let{
+            uid = it
+        }
+        myPref.getString("userType", "")?.let{
+            userType=it
+        }
+    }
+    private fun initView(){
         binding = ActivityLaundryRegisterBinding.inflate(layoutInflater)
 
         binding.topAppBar.setNavigationOnClickListener {
             onBackPressed()
         }
-        val myPref = getSharedPreferences("User", MODE_PRIVATE)
-        myPref.getString("uid", "")?.let{
-            uid = it
-        }
-        if(uid == ""){
 
-        }
         var laundryNum : Int = 0
         val items = resources.getStringArray(R.array.num_array)
         val spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, items)
@@ -45,26 +66,13 @@ class LaundryRegisterActivity : AppCompatActivity() {
                 // Do nothing
             }
         }
-        val intent = Intent()
-        intent.getStringExtra("sid")?.let{
-            sid = it
-        }
 
-        // buid intent로 받아오기
         binding.btnRegister.setOnClickListener {
             val returnIntent = Intent(this, StoreDetailActivity::class.java)
-            //"bu_id": "string",
-            //  "clothCount": "string",
-            //  "content": "string",
-            //  "cu_id": "string"
-//            val crd = ClientData(2, binding.clientName.text.toString(), binding.clientNumber.text.toString(),
-//                laundryNum, binding.laundryPrice.text.toString().toInt(), "2023-03-27")
-
             val rd = AddReservation(binding.etDetails.text.toString(), binding.etClothingType.text.toString(),laundryNum)
-//            returnIntent.putExtra("reservation", rd)
+            viewModel.addReservation(uid, buId, rd)
             setResult(RESULT_OK, returnIntent)
             finish()
         }
-        setContentView(binding.root)
     }
 }

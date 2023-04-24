@@ -1,4 +1,4 @@
-package project.laundry.presentation.owner
+package project.laundry.presentation.view.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
