@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import project.laundry.data.App
 import project.laundry.data.dataclass.Store
 import project.laundry.databinding.ItemRecyclerStoreListBinding
 import project.laundry.presentation.view.activity.OwnerMainActivity
@@ -13,6 +14,7 @@ class OwStoresAdapter(private val ctx: Context, private val items: ArrayList<Sto
     class ViewHolder(private val binding: ItemRecyclerStoreListBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(ctx: Context, item: Store) {
             binding.storeLayout.setOnClickListener {
+                App.prefs.buId=item.bu_id
                 val intent = Intent(ctx, OwnerMainActivity::class.java)
                 intent.putExtra("bu_id", item.bu_id)
                 ctx.startActivity(intent)

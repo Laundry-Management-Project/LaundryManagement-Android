@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import project.laundry.data.App
 import project.laundry.data.dataclass.Reservation
 import project.laundry.databinding.CuReRecyclerItemBinding
 import project.laundry.presentation.view.activity.StoreDetailActivity
@@ -14,13 +15,14 @@ class CuReAdapter(val ctx : Context, val items : ArrayList<Reservation>) : Recyc
         fun bind(ctx : Context, item : Reservation){
             binding.clothingType.text = item.clothing_type
             binding.storeName.text = item.bu_name
-            binding.num.text = item.num.toString()
+//            binding.num.text = item.num.toString()
             binding.details.text = item.request_detail
             binding.status.text = item.cloth_status
 
             binding.layout.setOnClickListener {
+                App.prefs.buId=item.bu_id
                 val intent = Intent(ctx, StoreDetailActivity::class.java)
-                intent.putExtra("bu_id", item.bu_id)
+
                 ctx.startActivity(intent)
             }
         }

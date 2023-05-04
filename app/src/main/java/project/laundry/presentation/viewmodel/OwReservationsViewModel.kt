@@ -24,7 +24,7 @@ class OwReservationsViewModel(application: Application): AndroidViewModel(applic
     fun loadReservations(userType : String, buId:String){
         rep.getReservations(userType, buId){ response ->
             response?.let{
-                reservations.value = it
+                reservations.value = it.reservations
             }
         }
     }
@@ -32,7 +32,7 @@ class OwReservationsViewModel(application: Application): AndroidViewModel(applic
     fun putReservation(buId:String, reId : String, rd : PutReservation){
         rep.putReservation(buId, reId, rd){response ->
             response?.let{
-                reservations.value = it
+                reservations.value = it.reservations
             }
         }
     }

@@ -1,6 +1,8 @@
 package project.laundry.data.repository
 
 import android.util.Log
+import okhttp3.OkHttpClient
+import project.laundry.data.AuthInterceptor
 import project.laundry.domain.APIInterface
 import project.laundry.data.dataclass.*
 import retrofit2.Call
@@ -11,6 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class Repository() {
 
+    private val okHttpClient = OkHttpClient.Builder().addInterceptor(AuthInterceptor()).build()
     private val myApi = Retrofit.Builder()
         .baseUrl("https://laundry-management-ywsj-team.koyeb.app/")
         .addConverterFactory(GsonConverterFactory.create())
@@ -42,10 +45,10 @@ class Repository() {
     }
     fun postSignUp(userType : String, signUpPost: SignUpPost, callback: (LoginResponse?) -> Unit) {
         lateinit var call : Call<LoginResponse>
-        if(userType == "CU"){
+        if(userType == "cu"){
             call = myApi.postSignUpCu(signUpPost)
         }
-        else if(userType == "OW"){
+        else if(userType == "ow"){
             call = myApi.postSignUpOw(signUpPost)
         }
         call.enqueue(object : Callback<LoginResponse> {
@@ -96,7 +99,7 @@ class Repository() {
     }
 
     fun addReservation(uid:String, buId : String, rd:AddReservation, callback: (Reservation?) -> Unit){
-        val call:Call<Reservation> = myApi.postReservation(uid, buId, rd)
+        val call:Call<Reservation> = myApi.postReservation(buId, uid, rd)
         call.enqueue(object : Callback<Reservation>{
             override fun onResponse(call: Call<Reservation>, response: Response<Reservation>) {
                 val res = response.body()
@@ -117,10 +120,10 @@ class Repository() {
 
     fun getStores(userType: String, id:String, callback: (Stores?) -> Unit){
         lateinit var call: Call<Stores>
-        if(userType == "OW"){
+        if(userType == "ow"){
             call = myApi.getStoresToOw(id)
         }
-        else if(userType == " CU"){
+        else if(userType == "cu"){
             call = myApi.getStoresToCu(id)
         }
         call.enqueue(object : Callback<Stores>{
@@ -138,18 +141,19 @@ class Repository() {
             override fun onFailure(call: Call<Stores>, t: Throwable) {
                 callback(null)
             }
+
         })
     }
-    fun getReservations(userType: String, id:String, callback: (ArrayList<Reservation>?) -> Unit){
-        lateinit var call: Call<ArrayList<Reservation>>
-        if(userType == "OW"){
+    fun getReservations(userType: String, id:String, callback: (Reservations?) -> Unit){
+        lateinit var call: Call<Reservations>
+        if(userType == "ow"){
             call = myApi.getReservationToOw(id)
         }
-        else if(userType == " CU"){
+        else if(userType == "cu"){
             call = myApi.getReservationToCu(id)
         }
-        call.enqueue(object : Callback<ArrayList<Reservation>>{
-            override fun onResponse(call: Call<ArrayList<Reservation>>, response: Response<ArrayList<Reservation>>) {
+        call.enqueue(object : Callback<Reservations>{
+            override fun onResponse(call: Call<Reservations>, response: Response<Reservations>) {
                 val res = response.body()
                 if(response.isSuccessful){
                     callback(res)
@@ -160,17 +164,17 @@ class Repository() {
                     callback(null)
                 }
             }
-            override fun onFailure(call: Call<ArrayList<Reservation>>, t: Throwable) {
+            override fun onFailure(call: Call<Reservations>, t: Throwable) {
                 callback(null)
             }
         })
     }
     fun getStoreDetail(userType: String, id:String, callback: (Store?) -> Unit){
         lateinit var call: Call<Store>
-        if(userType == "OW"){
+        if(userType == "ow"){
             call = myApi.getStoreDetailToOw(id)
         }
-        else if(userType == " CU"){
+        else if(userType == "cu"){
             call = myApi.getStoreDetailToCu(id)
         }
         call.enqueue(object : Callback<Store>{
@@ -190,10 +194,10 @@ class Repository() {
             }
         })
     }
-    fun putReservation(buId:String, reId:String, putResDto: PutReservation, callback: (ArrayList<Reservation>?) -> Unit){
+    fun putReservation(buId:String, reId:String, putResDto: PutReservation, callback: (Reservations?) -> Unit){
         val call = myApi.putReservation(buId, reId, putResDto)
-        call.enqueue(object : Callback<ArrayList<Reservation>>{
-            override fun onResponse(call: Call<ArrayList<Reservation>>, response: Response<ArrayList<Reservation>>) {
+        call.enqueue(object : Callback<Reservations>{
+            override fun onResponse(call: Call<Reservations>, response: Response<Reservations>) {
                 val res = response.body()
                 if(response.isSuccessful){
                     callback(res)
@@ -206,7 +210,7 @@ class Repository() {
 
             }
 
-            override fun onFailure(call: Call<ArrayList<Reservation>>, t: Throwable) {
+            override fun onFailure(call: Call<Reservations>, t: Throwable) {
                 callback(null)
             }
         })

@@ -10,37 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <LinearLayout
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="이름" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="개수" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="등록 날짜" />
-        </LinearLayout>
+            style="@style/title_text_style"
+            android:text = "예약 목록"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/reservations_recycler"
             android:layout_width="match_parent"

@@ -12,7 +12,7 @@ import project.laundry.presentation.viewmodel.SignUpViewModel
 class SignUpActivity : AppCompatActivity() {
     lateinit var binding:ActivitySignUpBinding
     private val viewModel= SignUpViewModel()
-    var userType:String = ""
+    var userType:String = "cu"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -41,9 +41,9 @@ class SignUpActivity : AppCompatActivity() {
         binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
             val sel = findViewById<RadioButton>(checkedId)
             userType = if(sel.text.toString() == "손님"){
-                "CU"
+                "cu"
             } else {
-                "OW"
+                "ow"
             }
         }
         binding.btnRegister.setOnClickListener {

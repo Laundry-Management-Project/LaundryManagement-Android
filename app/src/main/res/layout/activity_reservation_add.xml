@@ -11,114 +11,84 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_scrollFlags="scroll|enterAlways"
         >
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="세탁물 등록"
+            app:title="예약 등록"
             app:navigationIcon="@drawable/baseline_arrow_back_24"
             />
     </com.google.android.material.appbar.AppBarLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
         android:padding="20dp">
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="이름"
-        app:layout_constraintBottom_toTopOf="@id/client_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/client_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/number"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/laundry"
+            style="@style/text_Style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="세탁물 개수"
+            app:layout_constraintBottom_toTopOf="@id/spinner_laundry"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="전화번호"
-        app:layout_constraintBottom_toTopOf="@id/client_number"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/client_name" />
+        <Spinner
+            android:id="@+id/spinner_laundry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/laundry" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/client_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/laundry"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/number" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/clothing_type"
+            style="@style/text_Style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="옷 종류"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_laundry" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/laundry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="세탁물 개수"
-        app:layout_constraintBottom_toTopOf="@id/spinner_laundry"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/client_number" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_clothing_type"
+            style="@style/edit_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clothing_type" />
 
-    <Spinner
-        android:id="@+id/spinner_laundry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/laundry" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/text_Style"
+            android:layout_marginTop="20dp"
+            android:text="요청 사항"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_clothing_type" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/clothing_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="옷 종류"
-        app:layout_constraintBottom_toTopOf="@+id/spinner_laundry"
-        app:layout_constraintStart_toStartOf="parent"
-         />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_details"
+            style="@style/edit_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detail" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/et_clothing_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clothing_type" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="요청 사항"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_clothing_type" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/et_details"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detail" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_register"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_details"
-        android:text="등록"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/btn_style"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_details"
+            android:text="등록"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

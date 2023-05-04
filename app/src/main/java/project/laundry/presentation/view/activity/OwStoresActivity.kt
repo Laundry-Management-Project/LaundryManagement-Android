@@ -4,10 +4,12 @@ package project.laundry.presentation.view.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import project.laundry.data.App
 import project.laundry.data.dataclass.Store
 import project.laundry.databinding.ActivityStoresOwBinding
 import project.laundry.presentation.view.OwStoresAdapter
@@ -16,8 +18,9 @@ import project.laundry.presentation.viewmodel.OwStoresViewModel
 class OwStoresActivity : AppCompatActivity() {
     lateinit var binding : ActivityStoresOwBinding
     private val viewModel = OwStoresViewModel()
-    private var uid = ""
-    private var userType = ""
+
+    val uid = App.prefs.uid!!
+    val userType = App.prefs.userType!!
 
     private val startActivityForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -34,8 +37,9 @@ class OwStoresActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        getUserInfo()
         initView()
+        Log.d("userInfoActivity", uid!!)
+        Log.d("userInfoActivity", userType!!)
 
         viewModel.loadStores(uid, userType)
 
@@ -45,15 +49,7 @@ class OwStoresActivity : AppCompatActivity() {
 
         setContentView(binding.root)
     }
-    private fun getUserInfo(){
-        val myPref = getSharedPreferences("User", MODE_PRIVATE)
-        myPref.getString("uid", "")?.let{
-            uid = it
-        }
-        myPref.getString("userType", "")?.let{
-            userType = it
-        }
-    }
+
     private fun initView(){
         binding = ActivityStoresOwBinding.inflate(layoutInflater)
         binding.storeRecycler.layoutManager = LinearLayoutManager(this)

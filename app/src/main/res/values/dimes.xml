@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="dimen_text_size_sp">24sp</dimen>
-    <dimen name="dimen_text_filed_height_dp">60dp</dimen>
+    <dimen name="dimen_text_filed_height_dp">50dp</dimen>
     <dimen name="dimen_btn_height_dp">70dp</dimen>
 </resources>

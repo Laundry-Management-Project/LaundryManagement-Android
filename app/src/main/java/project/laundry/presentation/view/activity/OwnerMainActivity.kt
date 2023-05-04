@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import project.laundry.R
+import project.laundry.data.App
 import project.laundry.databinding.ActivityMainOwnerBinding
 import project.laundry.presentation.view.fragments.OwReservationsFragment
 import project.laundry.presentation.view.fragments.OwHomeFragment
@@ -12,8 +13,8 @@ import project.laundry.presentation.view.fragments.OwSalesFragment
 class OwnerMainActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityMainOwnerBinding
-    var uid = ""
-    var buId = ""
+    val uid = App.prefs.uid!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -23,21 +24,9 @@ class OwnerMainActivity : AppCompatActivity() {
     private fun initView(){
         binding = ActivityMainOwnerBinding.inflate(layoutInflater)
 
-        val intent = intent
-        intent.getStringExtra("bu_id")?.let{
-            buId = it
-        }
-
-        val bundle = Bundle().apply {
-            putString("bu_id", buId)
-        }
-        //buid넘기기
         val owHomeFragment = OwHomeFragment()
-        owHomeFragment.arguments = bundle
         val owSalesFragment = OwSalesFragment()
-        owSalesFragment.arguments = bundle
         val owReservationsFragment = OwReservationsFragment()
-        owReservationsFragment.arguments = bundle
 
         val fragList = mutableListOf(owHomeFragment, owSalesFragment, owReservationsFragment)
 

@@ -1,5 +1,6 @@
 package project.laundry.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import project.laundry.data.dataclass.Reservation
@@ -12,8 +13,9 @@ class CuReservationsViewModel : ViewModel() {
 
     fun getReservations(uid : String, userType:String){
         rep.getReservations(userType, uid){response ->
+            Log.d("getReservation", response.toString())
             response?.let{
-                reservations.value = response
+                reservations.value = response.reservations
             }
         }
     }

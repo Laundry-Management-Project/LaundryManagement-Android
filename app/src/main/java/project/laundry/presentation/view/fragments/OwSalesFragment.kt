@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
+import project.laundry.data.App
 import project.laundry.data.dataclass.DateItems
 import project.laundry.databinding.FragmentSalesOwBinding
 import project.laundry.presentation.view.CalendarAdapter
@@ -20,8 +21,8 @@ import java.util.*
 class OwSalesFragment : Fragment() {
     lateinit var binding : FragmentSalesOwBinding
 
-    private var uid =""
-    private var userType = ""
+    val uid = App.prefs.uid!!
+    val userType = App.prefs.userType!!
 
     private val itemList = arrayListOf<DateItems>()
     private val listAdapter = CalendarAdapter(itemList)
@@ -32,8 +33,6 @@ class OwSalesFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentSalesOwBinding.inflate(layoutInflater, container, false)
-
-        getUserInfo()
 
         binding.monthYearTv.text = LocalDate.now().year.toString() + LocalDate.now().month.toString()
         val mLayoutManager = GridLayoutManager(requireContext(), 7)
@@ -62,13 +61,4 @@ class OwSalesFragment : Fragment() {
         binding.calendarList.adapter = listAdapter
     }
 
-    private fun getUserInfo(){
-        val myPref = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE)
-        myPref.getString("uid", "")?.let{
-            uid = it
-        }
-        myPref.getString("userType", "")?.let{
-            userType = it
-        }
-    }
 }

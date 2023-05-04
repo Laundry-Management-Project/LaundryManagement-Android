@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import project.laundry.data.App
 import project.laundry.data.dataclass.LoginPost
 import project.laundry.databinding.ActivityLoginBinding
 import project.laundry.presentation.viewmodel.LoginViewModel
@@ -15,7 +16,7 @@ import project.laundry.presentation.viewmodel.LoginViewModel
 class LoginActivity : AppCompatActivity() {
     lateinit var binding : ActivityLoginBinding
     private val viewModel = LoginViewModel()
-    var userType:String = "CU"
+    var userType:String = "cu"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -24,12 +25,12 @@ class LoginActivity : AppCompatActivity() {
         viewModel.loginRes.observe(this, Observer { response ->
             Log.d("loginResponse", response.toString())
             if(response.status){
-                if(userType == "OW"){
+                if(userType == "ow"){
                     val intent = Intent(this, OwStoresActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
-                else if(userType == "CU"){
+                else if(userType == "cu"){
                     val intent = Intent(this, CustomerMainActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -41,11 +42,9 @@ class LoginActivity : AppCompatActivity() {
         })
 
         viewModel.uid.observe(this, Observer { uid ->
-            val sharedPreference = getSharedPreferences("User", MODE_PRIVATE)
-            val editor  : SharedPreferences.Editor = sharedPreference.edit()
-            editor.putString("uid",uid)
-            editor.putString("userType", userType)
-            editor.commit()
+            App.prefs.uid = uid
+            App.prefs.userType=userType
+            App.prefs.buId=null
         })
 
         setContentView(binding.root)
@@ -58,9 +57,9 @@ class LoginActivity : AppCompatActivity() {
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
             val sel = findViewById<RadioButton>(checkedId)
             userType = if(sel.text.toString() == "손님"){
-                "CU"
+                "cu"
             } else {
-                "OW"
+                "ow"
             }
         }
         binding.btnSignUp.setOnClickListener {

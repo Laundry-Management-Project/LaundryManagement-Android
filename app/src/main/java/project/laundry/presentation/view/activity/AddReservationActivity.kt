@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import project.laundry.R
+import project.laundry.data.App
 import project.laundry.data.dataclass.AddReservation
 import project.laundry.databinding.ActivityReservationAddBinding
 
@@ -14,20 +15,14 @@ import project.laundry.presentation.viewmodel.AddReservationViewModel
 
 class AddReservationActivity : AppCompatActivity() {
     lateinit var binding : ActivityReservationAddBinding
-    lateinit var uid : String
-    lateinit var buId : String
-    lateinit var userType:String
+
+    val uid = App.prefs.uid!!
+    val buId = App.prefs.buId!!
+    val userType = App.prefs.userType!!
 
     private val viewModel = AddReservationViewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        getUserInfo()
-
-        val intent = intent
-        intent.getStringExtra("bu_id")?.let{
-            buId = it
-        }
 
         initView()
 
@@ -41,15 +36,6 @@ class AddReservationActivity : AppCompatActivity() {
 
 
         setContentView(binding.root)
-    }
-    private fun getUserInfo(){
-        val myPref = getSharedPreferences("User", MODE_PRIVATE)
-        myPref.getString("uid", "")?.let{
-            uid = it
-        }
-        myPref.getString("userType", "")?.let{
-            userType=it
-        }
     }
     private fun initView(){
         binding = ActivityReservationAddBinding.inflate(layoutInflater)

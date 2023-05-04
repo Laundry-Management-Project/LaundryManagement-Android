@@ -19,3 +19,7 @@ data class Reservation(
     val request_detail : String,
     val createdAt : String
     ) : Serializable
+
+data class Reservations (
+    val reservations : ArrayList<Reservation>
+    ) : Serializable

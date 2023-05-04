@@ -16,6 +16,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import project.laundry.R
+import project.laundry.data.App
 import project.laundry.data.dataclass.AddStore
 import project.laundry.databinding.ActivityStoreRegisterBinding
 import project.laundry.presentation.viewmodel.StoreRegisterViewModel
@@ -24,12 +25,11 @@ class OwStoreRegisterActivity : AppCompatActivity(), OnMapReadyCallback {
     lateinit var binding : ActivityStoreRegisterBinding
 
     private val viewModel = StoreRegisterViewModel()
-    lateinit var uid : String
+    val uid = App.prefs.uid!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        getUserInfo()
         initView()
 
         viewModel.store.observe(this, Observer { store ->
@@ -74,18 +74,6 @@ class OwStoreRegisterActivity : AppCompatActivity(), OnMapReadyCallback {
     @UiThread
     override fun onMapReady(_naverMap: NaverMap) {
 
-    }
-
-    private fun getUserInfo(){
-        val myPref = getSharedPreferences("User", MODE_PRIVATE)
-        myPref.getString("uid", "")?.let{
-            uid = it
-            if(uid == ""){
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-        }
     }
     private fun initView(){
         binding = ActivityStoreRegisterBinding.inflate(layoutInflater)

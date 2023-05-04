@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import project.laundry.data.App
 import project.laundry.databinding.FragmentStoresCuBinding
 import project.laundry.presentation.view.CuStoresAdapter
 import project.laundry.presentation.viewmodel.CuStoresViewModel
@@ -16,16 +17,14 @@ class CuStoresFragmnet : Fragment() {
     lateinit var binding : FragmentStoresCuBinding
     val viewModel : CuStoresViewModel = CuStoresViewModel()
 
-    private var uid = ""
-    private var userType = ""
+    val uid= App.prefs.uid!!
+    val userType = App.prefs.userType!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
         binding = FragmentStoresCuBinding.inflate(layoutInflater, container, false)
-
-        getUserInfo()
 
         viewModel.getStores(userType, uid)
 
@@ -37,15 +36,5 @@ class CuStoresFragmnet : Fragment() {
 
 
         return binding.root
-    }
-
-    private fun getUserInfo(){
-        val myPref = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE)
-        myPref.getString("uid", "")?.let{
-            uid = it
-        }
-        myPref.getString("userType", "")?.let{
-            userType = it
-        }
     }
 }

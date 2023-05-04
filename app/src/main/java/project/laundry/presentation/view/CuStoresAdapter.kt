@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import project.laundry.data.App
 import project.laundry.data.dataclass.Store
 import project.laundry.databinding.BuRecyclerItemBinding
 import project.laundry.presentation.view.activity.StoreDetailActivity
@@ -14,8 +15,8 @@ class CuStoresAdapter(private val ctx : Context, private val items : ArrayList<S
         fun bind(ctx :Context, item: Store){
             binding.storeName.text = item.name
             binding.layout.setOnClickListener {
+                App.prefs.buId = item.bu_id
                 val intent = Intent(ctx, StoreDetailActivity::class.java)
-                intent.putExtra("bu_id", item.bu_id)
                 ctx.startActivity(intent)
             }
         }

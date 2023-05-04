@@ -1,49 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="16dp"
     app:cardElevation="2dp"
-    app:cardUseCompatPadding="true"
-    app:cardCornerRadius="5dp">
+    app:cardUseCompatPadding="true">
 
-    <LinearLayout
-        android:id="@+id/linear_layout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:padding="12dp"
+        app:layout_constraintEnd_toEndOf="@+id/is_open"
+        app:layout_constraintStart_toEndOf="@+id/is_open">
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/client_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="1"
-            android:text="홍길동"
-            android:textSize="20sp" />
+            android:id="@+id/store_name"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="매장명"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/client_laundry"
+            android:id="@+id/store_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:text="3" />
+            android:layout_marginTop="12dp"
+            android:text="주소"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/store_name" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/client_date"
-            android:layout_width="match_parent"
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:text="2023-03-23" />
-    </LinearLayout>
+            android:text="세탁 중"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/details"
+            android:layout_width="187dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="요청사항"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/store_address" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/num"
+            android:layout_width="187dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="end"
+            android:text="3개"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/clothing_type"
+            app:layout_constraintTop_toBottomOf="@+id/details" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/clothing_type"
+            android:layout_width="187dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="옷 종류"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/num"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/details" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/date"
+            android:layout_width="187dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="2023-01-01"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clothing_type" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.cardview.widget.CardView>
