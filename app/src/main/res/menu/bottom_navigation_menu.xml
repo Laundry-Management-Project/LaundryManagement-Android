@@ -3,15 +3,15 @@
         android:id="@+id/home"
         android:enabled="true"
         android:icon="@drawable/baseline_home_24"
-        android:title="@string/home_fragmnet"/>
+        android:title="매장"/>
     <item
         android:id="@+id/sales"
         android:enabled="true"
         android:icon="@drawable/baseline_attach_money_24"
-        android:title="@string/sales_fragment"/>
+        android:title="매출"/>
     <item
         android:id="@+id/client"
         android:enabled="true"
         android:icon="@drawable/baseline_manage_accounts_24"
-        android:title="@string/client_list_fragment"/>
+        android:title="예약"/>
 </menu>

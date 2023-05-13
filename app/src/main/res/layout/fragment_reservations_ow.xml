@@ -5,7 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.view.fragments.OwReservationsFragment"
-    android:orientation="vertical">
+    >
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,11 +23,13 @@
             android:layout_height="wrap_content"
             style="@style/title_text_style"
             android:text = "예약 목록"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/reservations_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="5dp"/>
+            android:padding="5dp"
+            />
     </LinearLayout>
 
 

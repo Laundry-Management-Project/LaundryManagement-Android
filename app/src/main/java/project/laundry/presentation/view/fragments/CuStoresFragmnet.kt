@@ -26,8 +26,15 @@ class CuStoresFragmnet : Fragment() {
 
         binding = FragmentStoresCuBinding.inflate(layoutInflater, container, false)
 
-        viewModel.getStores(userType, uid)
 
+
+        viewModel.loading.observe(viewLifecycleOwner){isLoading->
+            if(isLoading){
+                binding.progressBar.visibility= View.VISIBLE
+            }else{
+                binding.progressBar.visibility= View.GONE
+            }
+        }
         binding.buRecycler.layoutManager = LinearLayoutManager(requireContext())
 
         viewModel.stores.observe(viewLifecycleOwner) { stores ->
@@ -36,5 +43,11 @@ class CuStoresFragmnet : Fragment() {
 
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.getStores(userType, uid)
     }
 }

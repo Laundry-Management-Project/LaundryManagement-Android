@@ -9,6 +9,7 @@ import android.widget.RadioButton
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import project.laundry.data.App
+import project.laundry.data.Prefs
 import project.laundry.data.dataclass.LoginPost
 import project.laundry.databinding.ActivityLoginBinding
 import project.laundry.presentation.viewmodel.LoginViewModel
@@ -21,6 +22,10 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         initView()
+
+        App.prefs.token?.let{
+//            viewModel.useToken(it)
+        }
 
         viewModel.loginRes.observe(this, Observer { response ->
             Log.d("loginResponse", response.toString())

@@ -14,6 +14,7 @@ class OwReAdapter(private val ctx: Context, private val myReservations : List<Re
         fun bind(ctx: Context, rd : Reservation){
             binding.layout.setOnClickListener {
                 val intent = Intent(ctx, OwReservationDetailActivity::class.java)
+                intent.putExtra("re_id", rd.re_id)
                 ctx.startActivity(intent)
             }
             binding.storeName.text = rd.cu_name
@@ -24,7 +25,7 @@ class OwReAdapter(private val ctx: Context, private val myReservations : List<Re
             binding.status.text = when(rd.cloth_status){
                 "WASH_BEFORE" -> "세탁 전"
                 "WASH_IN_PROCESS" -> "세탁 중"
-                "WASH_COMPLETE" -> "세탁 후"
+                "WASH_COMPLETE" -> "세탁 완료"
                 else -> "error"
             }
         }

@@ -66,13 +66,22 @@ interface APIInterface {
         @Body putResDto : PutReservation
     ) : Call<Reservations>
 
+    @GET("owner/{buId}/calender")
+    fun getCalendarInfo(
+        @Path("buId") buId:String,
+        @Query("day") day:String,
+        @Query("month") month:String,
+        @Query("year") year:String,
+    ) : Call<CalendarInfo>
     // 로그인 및 회원가입
     @POST("signup/cu")
-    fun postSignUpCu(@Body signUpPostDto: SignUpPost): Call<LoginResponse>
+    fun postSignUpCu(@Body signUpPostDto: SignUpPost): Call<SignUpResponse>
 
     @POST("signup/ow")
-    fun postSignUpOw(@Body signUpPostDto: SignUpPost): Call<LoginResponse>
+    fun postSignUpOw(@Body signUpPostDto: SignUpPost): Call<SignUpResponse>
 
     @POST("login")
     fun postLogin(@Body loginPostDto : LoginPost): Call<LoginResponse>
+
+//    fun useToken()
 }

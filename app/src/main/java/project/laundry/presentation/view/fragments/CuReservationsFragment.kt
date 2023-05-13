@@ -28,7 +28,13 @@ class CuReservationsFragment : Fragment() {
         binding = FragmentReservationsCuBinding.inflate(layoutInflater, container, false)
         initView()
 
-        viewModel.getReservations(uid, userType)
+        viewModel.loading.observe(viewLifecycleOwner){isLoading->
+            if(isLoading){
+                binding.progressBar.visibility= View.VISIBLE
+            }else{
+                binding.progressBar.visibility= View.GONE
+            }
+        }
         viewModel.reservations.observe(viewLifecycleOwner){reservations ->
             binding.reRecycler.adapter = CuReAdapter(requireActivity(), reservations)
         }
@@ -36,7 +42,11 @@ class CuReservationsFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
 
+        viewModel.getReservations(uid,userType)
+    }
     private fun initView(){
 
         binding.reRecycler.layoutManager = LinearLayoutManager(requireActivity())

@@ -17,7 +17,13 @@ class CuReAdapter(val ctx : Context, val items : ArrayList<Reservation>) : Recyc
             binding.storeName.text = item.bu_name
 //            binding.num.text = item.num.toString()
             binding.details.text = item.request_detail
-            binding.status.text = item.cloth_status
+
+            binding.status.text = when(item.cloth_status){
+                "WASH_BEFORE" -> "세탁 전"
+                "WASH_IN_PROCESS" -> "세탁 중"
+                "WASH_COMPLETE" -> "세탁 완료"
+                else -> "error"
+            }
 
             binding.layout.setOnClickListener {
                 App.prefs.buId=item.bu_id

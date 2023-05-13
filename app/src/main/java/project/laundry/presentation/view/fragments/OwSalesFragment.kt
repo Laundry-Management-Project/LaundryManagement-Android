@@ -9,8 +9,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import project.laundry.data.App
 import project.laundry.data.dataclass.DateItems
+import project.laundry.data.dataclass.Income
 import project.laundry.databinding.FragmentSalesOwBinding
 import project.laundry.presentation.view.CalendarAdapter
+import project.laundry.presentation.viewmodel.OwSalesViewModel
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -23,10 +25,12 @@ class OwSalesFragment : Fragment() {
 
     val uid = App.prefs.uid!!
     val userType = App.prefs.userType!!
+    val buId = App.prefs.buId!!
 
     private val itemList = arrayListOf<DateItems>()
     private val listAdapter = CalendarAdapter(itemList)
 
+    val viewModel = OwSalesViewModel()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,23 +44,37 @@ class OwSalesFragment : Fragment() {
         // recyclerView orientation (가로 방향 스크롤 설정)
         binding.calendarList.layoutManager = mLayoutManager
 
-        setListView()
+
+        viewModel.getCalendarInfo(buId, "10", "5", "2023")
+        viewModel.calendarData.observe(viewLifecycleOwner){
+            setListView(it.daily_income)
+            binding.tvIncomeMonth.text = it.current_month_income.toString()
+            binding.tvVisitorMonth.text = it.current_month_visitor.toString()
+        }
 
 
         return binding.root
     }
 
-    private fun setListView() {
+    private fun setListView(dailyIncome : ArrayList<Income>) {
         // 현재 달의 마지막 날짜
         val lastDayOfMonth = LocalDate.now().with(TemporalAdjusters.lastDayOfMonth())
         lastDayOfMonth.format(DateTimeFormatter.ofPattern("dd"))
 
-        for(i: Int in 1..lastDayOfMonth.dayOfMonth) {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.DAY_OF_MONTH, 1)
+        val tempDate = calendar.get(Calendar.DAY_OF_WEEK)-1
+
+
+        for(i:Int in 1 .. tempDate){
+            itemList.add(DateItems("", ""))
+        }
+        for(i: Int in 1..LocalDate.now().dayOfMonth) {
             val date = LocalDate.of(LocalDate.now().year, LocalDate.now().month, i)
             val dayOfWeek: DayOfWeek = date.dayOfWeek
             dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.US)
 
-            itemList.add(DateItems(i.toString(), "+33,000"))
+            itemList.add(DateItems(i.toString(), dailyIncome.get(i-1).price.toString()))
         }
         binding.calendarList.adapter = listAdapter
     }

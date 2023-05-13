@@ -25,16 +25,16 @@ class CustomerMainActivity : AppCompatActivity() {
         val cuStoresFragmnet = CuStoresFragmnet()
         val cuReservationsFragment = CuReservationsFragment()
         val fragList = mutableListOf(cuStoresFragmnet, cuReservationsFragment)
-        var currentFragment: Fragment?=fragList[1]
+        var currentFragment: Fragment?=fragList[0]
 
-        supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragList[1]).commit()
-        supportFragmentManager.beginTransaction().show(fragList[1]).commit()
+        supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragList[0]).commit()
+        supportFragmentManager.beginTransaction().show(fragList[0]).commit()
 
         binding.bottomNavigation.setOnItemSelectedListener() { item ->
             Log.d("fragmnetid", item.itemId.toString())
             val index = when (item.itemId) {
-                R.id.home -> 0
-                R.id.setting -> 1
+                R.id.store -> 0
+                R.id.reservation -> 1
                 else -> -1
             }
             Log.d("fragmentid", index.toString())

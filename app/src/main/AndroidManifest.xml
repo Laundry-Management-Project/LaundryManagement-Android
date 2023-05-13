@@ -21,6 +21,7 @@
             android:value="z8g22aynj8" />
         <activity
             android:name=".presentation.view.activity.OwReservationDetailActivity"
+            android:theme="@style/Theme.Material3.Light.NoActionBar"
             android:exported="true" />
         <activity
             android:name=".presentation.view.activity.OwStoreRegisterActivity"
@@ -34,11 +35,7 @@
             android:name=".presentation.view.activity.StoreDetailActivity"
             android:exported="true"
             android:theme="@style/Theme.Material3.Light.NoActionBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".presentation.view.activity.SignUpActivity"
@@ -50,7 +47,11 @@
             android:exported="true"
             android:theme="@style/Theme.Material3.Light.NoActionBar"
             android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".presentation.view.activity.CustomerMainActivity"

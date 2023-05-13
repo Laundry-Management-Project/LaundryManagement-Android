@@ -36,6 +36,7 @@ class OwStoreRegisterActivity : AppCompatActivity(), OnMapReadyCallback {
             if(store.bu_id.isNotEmpty()){
                 val returnIntent = Intent(this, OwStoresActivity::class.java)
                 returnIntent.putExtra("store", store)
+                setResult(RESULT_OK, returnIntent)
                 finish()
             }
         })

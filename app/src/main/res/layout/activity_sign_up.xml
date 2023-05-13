@@ -6,21 +6,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.view.activity.LoginActivity">
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_scrollFlags="scroll|enterAlways"
         >
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="회원 가입"
+            app:title="회원가입"
             app:navigationIcon="@drawable/baseline_arrow_back_24"
             />
     </com.google.android.material.appbar.AppBarLayout>
+
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -29,17 +28,18 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="20dp"
+            android:padding="30dp"
             >
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_id"
-                android:layout_width="match_parent"
+                style="@style/text_Style"
+                android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_marginTop="40dp"
                 android:text="ID"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-                style="@style/text_Style"/>
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_id"
                 android:layout_width="match_parent"
@@ -50,13 +50,13 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_pw"
-                android:layout_width="match_parent"
+                style="@style/text_Style"
+                android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_marginTop="20dp"
                 android:text="PW"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_id"
-                style="@style/text_Style"/>
+                app:layout_constraintTop_toBottomOf="@+id/et_id" />
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_pw"
                 android:layout_width="match_parent"
@@ -68,13 +68,13 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_name"
-                android:layout_width="match_parent"
+                style="@style/text_Style"
+                android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_marginTop="20dp"
                 android:text="이름"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_pw"
-                style="@style/text_Style"/>
+                app:layout_constraintTop_toBottomOf="@+id/et_pw" />
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_name"
                 android:layout_width="match_parent"
@@ -84,13 +84,13 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_phone_num"
-                android:layout_width="match_parent"
+                style="@style/text_Style"
+                android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_marginTop="20dp"
                 android:text="전화번호"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_name"
-                style="@style/text_Style"/>
+                app:layout_constraintTop_toBottomOf="@+id/et_name" />
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_phone_num"
                 android:layout_width="match_parent"
@@ -134,6 +134,54 @@
                     android:textStyle="bold" />
 
             </RadioGroup>
+
+            <TextView
+                android:id="@+id/tv_check_id"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="40dp"
+                android:text="영어, 숫자를 제외한 문자는 입력 불가능합니다."
+                android:textColor="#F44336"
+                android:visibility="invisible"
+                app:layout_constraintStart_toEndOf="@+id/tv_id"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+            <TextView
+                android:id="@+id/tv_check_name"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="한글, 숫자를 제외한 문자는 입력 불가능합니다."
+                android:textColor="#F44336"
+                android:visibility="invisible"
+                app:layout_constraintStart_toEndOf="@+id/tv_name"
+                app:layout_constraintTop_toBottomOf="@+id/et_pw" />
+
+            <TextView
+                android:id="@+id/tv_check_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="번호 형식이 올바르지 않습니다."
+                android:textColor="#F44336"
+                android:visibility="invisible"
+                app:layout_constraintStart_toEndOf="@+id/tv_phone_num"
+                app:layout_constraintTop_toBottomOf="@+id/et_name" />
+
+            <TextView
+                android:id="@+id/tv_check_pw"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="영어, 숫자, 특수문자를 모두 사용해야 합니다."
+                android:textColor="#F44336"
+                android:visibility="invisible"
+                app:layout_constraintStart_toEndOf="@+id/tv_pw"
+                app:layout_constraintTop_toBottomOf="@+id/et_id" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

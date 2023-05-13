@@ -39,6 +39,14 @@ class OwReservationsFragment : Fragment() {
 
         viewModel.loadReservations(userType, buId)
 
+        viewModel.loading.observe(viewLifecycleOwner){isLoading->
+            if(isLoading){
+                binding.progressBar.visibility= View.VISIBLE
+            }else{
+                binding.progressBar.visibility= View.GONE
+            }
+        }
+
         viewModel.reservations.observe(viewLifecycleOwner) { reservations ->
             binding.reservationsRecycler.adapter = OwReAdapter(requireContext(),reservations)
         }

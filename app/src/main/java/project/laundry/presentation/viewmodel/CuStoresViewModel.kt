@@ -9,13 +9,16 @@ class CuStoresViewModel : ViewModel() {
 
     val stores : MutableLiveData<ArrayList<Store>> = MutableLiveData()
 
+    val loading = MutableLiveData<Boolean>()
     fun getStores(userType:String, uid : String){
         val rep = Repository()
+        loading.value=true
 
         rep.getStores(userType, uid){ response ->
             response?.let{
                 stores.value = it.stores
             }
+            loading.value=false
         }
     }
 }

@@ -14,6 +14,8 @@ class CuStoresAdapter(private val ctx : Context, private val items : ArrayList<S
     class ViewHolder(val binding : BuRecyclerItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(ctx :Context, item: Store){
             binding.storeName.text = item.name
+            binding.storeAddress.text = item.address
+
             binding.layout.setOnClickListener {
                 App.prefs.buId = item.bu_id
                 val intent = Intent(ctx, StoreDetailActivity::class.java)

@@ -2,7 +2,9 @@ package project.laundry.data.repository
 
 import android.util.Log
 import okhttp3.OkHttpClient
+import project.laundry.data.App
 import project.laundry.data.AuthInterceptor
+import project.laundry.data.Prefs
 import project.laundry.domain.APIInterface
 import project.laundry.data.dataclass.*
 import retrofit2.Call
@@ -15,13 +17,21 @@ class Repository() {
 
     private val okHttpClient = OkHttpClient.Builder().addInterceptor(AuthInterceptor()).build()
     private val myApi = Retrofit.Builder()
+        .client(okHttpClient)
         .baseUrl("https://laundry-management-ywsj-team.koyeb.app/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(APIInterface::class.java)
 
+    private val beforeLoginApi = Retrofit.Builder()
+        .baseUrl("https://laundry-management-ywsj-team.koyeb.app/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(APIInterface::class.java)
+
+
     fun postLogin(loginPost:LoginPost, callback: (LoginResponse?) -> Unit) {
-        val call: Call<LoginResponse> = myApi.postLogin(loginPost)
+        val call: Call<LoginResponse> = beforeLoginApi.postLogin(loginPost)
         call.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
@@ -43,16 +53,16 @@ class Repository() {
             }
         })
     }
-    fun postSignUp(userType : String, signUpPost: SignUpPost, callback: (LoginResponse?) -> Unit) {
-        lateinit var call : Call<LoginResponse>
+    fun postSignUp(userType : String, signUpPost: SignUpPost, callback: (SignUpResponse?) -> Unit) {
+        lateinit var call : Call<SignUpResponse>
         if(userType == "cu"){
-            call = myApi.postSignUpCu(signUpPost)
+            call = beforeLoginApi.postSignUpCu(signUpPost)
         }
         else if(userType == "ow"){
-            call = myApi.postSignUpOw(signUpPost)
+            call = beforeLoginApi.postSignUpOw(signUpPost)
         }
-        call.enqueue(object : Callback<LoginResponse> {
-            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+        call.enqueue(object : Callback<SignUpResponse> {
+            override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
                 if (response.isSuccessful) {
                     val res = response.body()
                     Log.d("SignUpResponseBody", res.toString())
@@ -65,7 +75,7 @@ class Repository() {
                     callback(null)
                 }
             }
-            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+            override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
                 // 통신 실패 처리
                 Log.d("SignUpResponseFail", t.message.toString())
                 callback(null)
@@ -130,6 +140,7 @@ class Repository() {
             override fun onResponse(call: Call<Stores>, response: Response<Stores>) {
                 val res = response.body()
                 if(response.isSuccessful){
+                    Log.d("response", response.toString())
                     callback(res)
                 }
                 else {
@@ -139,6 +150,7 @@ class Repository() {
                 }
             }
             override fun onFailure(call: Call<Stores>, t: Throwable) {
+                Log.d("response", "response is fail - get stores")
                 callback(null)
             }
 
@@ -233,5 +245,26 @@ class Repository() {
             }
         })
     }
+
+    fun getCalendarInfo(buId:String, day:String, month:String, year:String,  callback:(CalendarInfo?) -> Unit){
+        val call = myApi.getCalendarInfo(buId, day, month, year)
+
+        call.enqueue(object:Callback<CalendarInfo>{
+            override fun onResponse(call: Call<CalendarInfo>, response: Response<CalendarInfo>) {
+                val res = response.body()
+                if(response.isSuccessful){
+                    callback(res)
+                }
+            }
+
+            override fun onFailure(call: Call<CalendarInfo>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
+//    fun useToken(token:String, callback : (LoginResponse?) -> Unit){
+//        val call = beforeLoginApi.
+//    }
 
 }

@@ -4,17 +4,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="viewModel"
-            type="project.laundry.presentation.viewmodel.StoreDetailViewModel" />
-    </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".presentation.view.activity.StoreDetailActivity">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"
@@ -87,7 +87,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="10:00 ~ 18:00"
                 app:layout_constraintTop_toBottomOf="@+id/bu_hours"
                 tools:layout_editor_absoluteX="-10dp" />
 
@@ -114,7 +113,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="매장 소개"
                 app:layout_constraintTop_toBottomOf="@+id/intro"
                 tools:layout_editor_absoluteX="20dp" />
 
@@ -142,7 +140,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="031-1234-1234"
                 app:layout_constraintTop_toBottomOf="@+id/contact"
                 tools:layout_editor_absoluteX="20dp" />
 
@@ -161,25 +158,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="경기도 화성시"
                 app:layout_constraintTop_toBottomOf="@+id/address"
                 tools:layout_editor_absoluteX="24dp" />
-
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/materialDivider4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_address" />
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/map"
-                android:name="com.naver.maps.map.MapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/materialDivider4"
-                />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_register"
@@ -189,6 +169,15 @@
                 android:text="세탁 신청"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_store_name"
+                tools:src="@tools:sample/avatars" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

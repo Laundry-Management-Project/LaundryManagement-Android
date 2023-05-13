@@ -5,6 +5,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
@@ -16,7 +17,7 @@ import project.laundry.databinding.ActivityStoreDetailBinding
 import project.laundry.presentation.viewmodel.StoreDetailViewModel
 import java.io.Serializable
 
-class StoreDetailActivity : AppCompatActivity(), OnMapReadyCallback {
+class StoreDetailActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityStoreDetailBinding
     private val viewModel = StoreDetailViewModel()
@@ -34,6 +35,15 @@ class StoreDetailActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         viewModel.loadDetail(userType, buId)
+
+
+        viewModel.loading.observe(this){isLoading ->
+            if(isLoading){
+                binding.progressBar.visibility = View.VISIBLE
+            }else{
+                binding.progressBar.visibility = View.GONE
+            }
+        }
         viewModel.store.observe(this){store ->
             binding.tvStoreName.text = store.name
             binding.tvBuHours.text = store.bu_hour
@@ -41,13 +51,13 @@ class StoreDetailActivity : AppCompatActivity(), OnMapReadyCallback {
             binding.tvAddress.text = store.address
             binding.tvContact.text = store.contact
         }
-
-        val fm = supportFragmentManager
-        val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
-            ?: MapFragment.newInstance().also {
-                fm.beginTransaction().add(R.id.map, it).commit()
-            }
-        mapFragment?.getMapAsync(this)
+//
+//        val fm = supportFragmentManager
+//        val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
+//            ?: MapFragment.newInstance().also {
+//                fm.beginTransaction().add(R.id.map, it).commit()
+//            }
+//        mapFragment?.getMapAsync(this)
 
         setContentView(binding.root)
 
@@ -73,8 +83,8 @@ class StoreDetailActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
     }
-
-    override fun onMapReady(p0: NaverMap) {
-        TODO("Not yet implemented")
-    }
+//
+//    override fun onMapReady(p0: NaverMap) {
+//        TODO("Not yet implemented")
+//    }
 }

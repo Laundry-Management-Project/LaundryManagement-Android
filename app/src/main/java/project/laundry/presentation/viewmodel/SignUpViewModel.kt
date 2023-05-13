@@ -5,11 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import project.laundry.data.dataclass.LoginResponse
 import project.laundry.data.dataclass.SignUpPost
+import project.laundry.data.dataclass.SignUpResponse
 import project.laundry.data.repository.Repository
 
 class SignUpViewModel : ViewModel() {
 
-    val signUpRes : MutableLiveData<LoginResponse> = MutableLiveData()
+    val signUpRes : MutableLiveData<SignUpResponse> = MutableLiveData()
 
     fun addUser(signUpPost: SignUpPost, userType:String){
         val rep = Repository()
