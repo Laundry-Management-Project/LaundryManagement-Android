@@ -16,7 +16,7 @@ class OwReservationsViewModel(application: Application): AndroidViewModel(applic
     val loading = MutableLiveData<Boolean>()
     fun loadReservations(userType : String, buId:String){
         loading.value=true
-        rep.getReservations(userType, buId){ response ->
+        rep.getReservations(userType, buId, 1,10){ response ->
             response?.let{
                 reservations.value = it.reservations
             }

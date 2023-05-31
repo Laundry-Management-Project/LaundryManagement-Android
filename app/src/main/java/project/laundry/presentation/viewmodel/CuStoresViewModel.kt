@@ -14,7 +14,7 @@ class CuStoresViewModel : ViewModel() {
         val rep = Repository()
         loading.value=true
 
-        rep.getStores(userType, uid){ response ->
+        rep.getStores(userType, uid, 1,10){ response ->
             response?.let{
                 stores.value = it.stores
             }

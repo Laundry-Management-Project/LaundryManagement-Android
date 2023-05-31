@@ -10,10 +10,14 @@ interface APIInterface {
     @GET ("customer/reservations")
     fun getReservationToCu(
         @Query("uId") uid:String,
+        @Query("page") page:Int,
+        @Query("size") size :Int
     ) : Call<Reservations>
     @GET ("customer/businesses")
     fun getStoresToCu(
-        @Query("uId") uid:String
+        @Query("uId") uid:String,
+        @Query("page") page:Int,
+        @Query("size") size :Int
     ) : Call<Stores>
 
     @GET ("customer/{buId}")
@@ -33,7 +37,9 @@ interface APIInterface {
     // 사장
     @GET ("owner/businesses")
     fun getStoresToOw(
-        @Query("uId") uid:String
+        @Query("uId") uid:String,
+        @Query("page") page:Int,
+        @Query("size") size :Int
     ) : Call<Stores>
 
     @POST ("owner/business/add")
@@ -44,7 +50,9 @@ interface APIInterface {
 
     @GET ("owner/{buId}/reservations")
     fun getReservationToOw(
-        @Path("buId") buId:String
+        @Path("buId") buId:String,
+        @Query("page") page:Int,
+        @Query("size") size :Int
     ) : Call<Reservations>
 
     @GET ("owner/{buId}/detail")

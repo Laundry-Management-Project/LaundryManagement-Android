@@ -1,8 +1,11 @@
 package project.laundry.presentation.view.activity
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import androidx.annotation.UiThread
 import androidx.lifecycle.Observer
 import com.naver.maps.map.MapFragment
@@ -11,6 +14,10 @@ import com.naver.maps.map.MapFragment
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.webkit.WebView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 import com.naver.maps.map.NaverMap
@@ -19,19 +26,45 @@ import project.laundry.R
 import project.laundry.data.App
 import project.laundry.data.dataclass.AddStore
 import project.laundry.databinding.ActivityStoreRegisterBinding
+import project.laundry.presentation.view.ImageAdapter
+import project.laundry.presentation.viewmodel.AddReservationViewModel
 import project.laundry.presentation.viewmodel.StoreRegisterViewModel
 
 class OwStoreRegisterActivity : AppCompatActivity(), OnMapReadyCallback {
     lateinit var binding : ActivityStoreRegisterBinding
 
-    private val viewModel = StoreRegisterViewModel()
     val uid = App.prefs.uid!!
 
+    lateinit var viewModel :StoreRegisterViewModel
+
+    private val arrUri = ArrayList<Uri>()
+    private val childForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        when (result.resultCode){
+            RESULT_OK -> {
+                val uri : Uri? = result.data?.data
+
+                if(uri == null){
+                    Toast.makeText(this, "잘못된 이미지 입니다.", Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    viewModel.addImage(uri)
+                }
+            }
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         initView()
 
+
+        val viewModelProvider = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application))
+        viewModel = viewModelProvider[StoreRegisterViewModel::class.java]
+
+        viewModel.imageUris.observe(this){
+            binding.imageRecycler.adapter = ImageAdapter(this, it)
+            Log.d("imgaeobserver", "ok")
+        }
         viewModel.store.observe(this, Observer { store ->
             if(store.bu_id.isNotEmpty()){
                 val returnIntent = Intent(this, OwStoresActivity::class.java)
@@ -79,15 +112,16 @@ class OwStoreRegisterActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun initView(){
         binding = ActivityStoreRegisterBinding.inflate(layoutInflater)
 
+        binding.imageRecycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.topAppBar.setNavigationOnClickListener {
             onBackPressed()
         }
         val fm = supportFragmentManager
-        val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
-            ?: MapFragment.newInstance().also {
-                fm.beginTransaction().add(R.id.map, it).commit()
-            }
-        mapFragment?.getMapAsync(this)
+//        val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
+//            ?: MapFragment.newInstance().also {
+//                fm.beginTransaction().add(R.id.map, it).commit()
+//            }
+//        mapFragment?.getMapAsync(this)
 
         binding.btnRegister.setOnClickListener {
             val addStoreDto = AddStore(
@@ -98,6 +132,12 @@ class OwStoreRegisterActivity : AppCompatActivity(), OnMapReadyCallback {
                 binding.etIntro.text.toString()
             )
             viewModel.addStore(uid, addStoreDto)
+            Log.d("arrUriSIze", arrUri.size.toString())
+        }
+
+        binding.btnAddImage.setOnClickListener {
+            val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            childForResult.launch(galleryIntent)
         }
     }
 }

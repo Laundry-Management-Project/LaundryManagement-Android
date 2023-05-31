@@ -9,6 +9,9 @@ class App : Application() {
 
     override fun onCreate() {
         prefs = Prefs(applicationContext)
+        prefs.buId=""
+        prefs.uid=""
+        prefs.userType=""
         super.onCreate()
     }
 }

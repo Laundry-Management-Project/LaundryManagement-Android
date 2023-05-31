@@ -37,4 +37,8 @@ class OwStoresAdapter(private val ctx: Context, private val items: ArrayList<Sto
         return items.size
 
     }
+
+    override fun setHasStableIds(hasStableIds: Boolean) {
+        super.setHasStableIds(true)
+    }
 }

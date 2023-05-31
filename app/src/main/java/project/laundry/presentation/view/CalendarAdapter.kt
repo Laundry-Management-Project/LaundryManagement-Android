@@ -29,8 +29,10 @@ class CalendarAdapter(private val dataSet: ArrayList<DateItems>): RecyclerView.A
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.dateTv.text = dataSet[position].date
-        holder.contentTv.text = dataSet[position].content
+        if(dataSet[position].date!="") {
+            holder.dateTv.text = dataSet[position].date
+            holder.contentTv.text = dataSet[position].content
+        }
     }
 
     override fun getItemCount() = dataSet.size

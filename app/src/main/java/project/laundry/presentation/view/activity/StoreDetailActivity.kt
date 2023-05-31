@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.ViewModelProvider
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
@@ -14,13 +15,16 @@ import project.laundry.R
 import project.laundry.data.App
 import project.laundry.data.dataclass.AddReservation
 import project.laundry.databinding.ActivityStoreDetailBinding
+import project.laundry.presentation.view.StoreImagePagerAdapter
+import project.laundry.presentation.viewmodel.OwHomeViewModel
 import project.laundry.presentation.viewmodel.StoreDetailViewModel
 import java.io.Serializable
 
 class StoreDetailActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityStoreDetailBinding
-    private val viewModel = StoreDetailViewModel()
+
+    lateinit var viewModel :StoreDetailViewModel
 
     val uid=App.prefs.uid!!
     val userType = App.prefs.userType!!
@@ -29,13 +33,21 @@ class StoreDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
+        val viewModelProvider = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application))
+        viewModel = viewModelProvider[StoreDetailViewModel::class.java]
+
         initView()
-        if(userType == "ow"){
-            //수정할 수 있는 버튼 및 화면 구성
-        }
 
         viewModel.loadDetail(userType, buId)
 
+        viewModel.bitmaps.observe(this){bitmaps->
+            if(bitmaps.isNotEmpty()){
+                Log.d("bitmapsSize", bitmaps.size.toString())
+                binding.viewPager.adapter = StoreImagePagerAdapter(this, bitmaps)
+            }
+
+        }
 
         viewModel.loading.observe(this){isLoading ->
             if(isLoading){

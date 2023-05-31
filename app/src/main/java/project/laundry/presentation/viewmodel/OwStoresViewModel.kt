@@ -18,7 +18,7 @@ class OwStoresViewModel : ViewModel() {
 
     fun loadStores(uid : String, userType:String){
         loading.value=true
-        rep.getStores(userType, uid) { response ->
+        rep.getStores(userType, uid, 1,10) { response ->
             Log.d("getStorestoOw", response.toString())
             response?.let{
                 stores.value=it.stores

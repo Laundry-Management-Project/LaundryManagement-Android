@@ -128,13 +128,13 @@ class Repository() {
         })
     }
 
-    fun getStores(userType: String, id:String, callback: (Stores?) -> Unit){
+    fun getStores(userType: String, id:String, page:Int, size:Int, callback: (Stores?) -> Unit){
         lateinit var call: Call<Stores>
         if(userType == "ow"){
-            call = myApi.getStoresToOw(id)
+            call = myApi.getStoresToOw(id, page, size)
         }
         else if(userType == "cu"){
-            call = myApi.getStoresToCu(id)
+            call = myApi.getStoresToCu(id, page, size)
         }
         call.enqueue(object : Callback<Stores>{
             override fun onResponse(call: Call<Stores>, response: Response<Stores>) {
@@ -156,13 +156,13 @@ class Repository() {
 
         })
     }
-    fun getReservations(userType: String, id:String, callback: (Reservations?) -> Unit){
+    fun getReservations(userType: String, id:String, page:Int, size:Int, callback: (Reservations?) -> Unit){
         lateinit var call: Call<Reservations>
         if(userType == "ow"){
-            call = myApi.getReservationToOw(id)
+            call = myApi.getReservationToOw(id, page, size)
         }
         else if(userType == "cu"){
-            call = myApi.getReservationToCu(id)
+            call = myApi.getReservationToCu(id, page, size)
         }
         call.enqueue(object : Callback<Reservations>{
             override fun onResponse(call: Call<Reservations>, response: Response<Reservations>) {

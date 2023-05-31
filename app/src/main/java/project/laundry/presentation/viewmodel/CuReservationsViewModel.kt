@@ -14,7 +14,7 @@ class CuReservationsViewModel : ViewModel() {
 
     fun getReservations(uid : String, userType:String){
         loading.value=true
-        rep.getReservations(userType, uid){response ->
+        rep.getReservations(userType, uid, 1, 10){response ->
             Log.d("getReservation", response.toString())
             response?.let{
                 reservations.value = response.reservations

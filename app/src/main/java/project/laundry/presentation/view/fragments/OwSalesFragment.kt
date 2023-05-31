@@ -2,6 +2,7 @@ package project.laundry.presentation.view.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -38,16 +39,30 @@ class OwSalesFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentSalesOwBinding.inflate(layoutInflater, container, false)
 
-        binding.monthYearTv.text = LocalDate.now().year.toString() + LocalDate.now().month.toString()
+        binding.monthYearTv.text = LocalDate.now().year.toString() +"년 "+ LocalDate.now().month.value+"월"
         val mLayoutManager = GridLayoutManager(requireContext(), 7)
 
         // recyclerView orientation (가로 방향 스크롤 설정)
         binding.calendarList.layoutManager = mLayoutManager
 
+        val now = LocalDate.now()
+        var day = now.dayOfMonth
+        var month = now.monthValue
+        var year = now.year
 
-        viewModel.getCalendarInfo(buId, "10", "5", "2023")
+        binding.preMonthBtn.setOnClickListener {
+            month -= 1
+            viewModel.getCalendarInfo(buId, day.toString(),month.toString(),year.toString())
+        }
+        binding.nextMonthBtn.setOnClickListener {
+            month += 1
+            viewModel.getCalendarInfo(buId, day.toString(),month.toString(),year.toString())
+        }
+        viewModel.getCalendarInfo(buId, day.toString(),month.toString(),year.toString())
+
+//        viewModel.test()
         viewModel.calendarData.observe(viewLifecycleOwner){
-            setListView(it.daily_income)
+            setListView(it.daily_income, day, month, year)
             binding.tvIncomeMonth.text = it.current_month_income.toString()
             binding.tvVisitorMonth.text = it.current_month_visitor.toString()
         }
@@ -56,25 +71,31 @@ class OwSalesFragment : Fragment() {
         return binding.root
     }
 
-    private fun setListView(dailyIncome : ArrayList<Income>) {
-        // 현재 달의 마지막 날짜
-        val lastDayOfMonth = LocalDate.now().with(TemporalAdjusters.lastDayOfMonth())
-        lastDayOfMonth.format(DateTimeFormatter.ofPattern("dd"))
+    private fun setListView(dailyIncome : ArrayList<Income>, day:Int, month:Int, year:Int) {
 
         val calendar = Calendar.getInstance()
-        calendar.set(Calendar.DAY_OF_MONTH, 1)
+        calendar.set(month, 1)
         val tempDate = calendar.get(Calendar.DAY_OF_WEEK)-1
 
 
         for(i:Int in 1 .. tempDate){
             itemList.add(DateItems("", ""))
         }
-        for(i: Int in 1..LocalDate.now().dayOfMonth) {
-            val date = LocalDate.of(LocalDate.now().year, LocalDate.now().month, i)
+        var count = 0
+
+
+        for(i: Int in 1..LocalDate.now().lengthOfMonth()) {
+            val date = LocalDate.of(year,month, i)
             val dayOfWeek: DayOfWeek = date.dayOfWeek
             dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.US)
 
-            itemList.add(DateItems(i.toString(), dailyIncome.get(i-1).price.toString()))
+            if(dailyIncome.size>count && dailyIncome[count].date==i) {
+                itemList.add(DateItems(i.toString(), "+ " + dailyIncome[count].price.toString()))
+                count++
+            }
+            else{
+                itemList.add(DateItems(i.toString(),""))
+            }
         }
         binding.calendarList.adapter = listAdapter
     }

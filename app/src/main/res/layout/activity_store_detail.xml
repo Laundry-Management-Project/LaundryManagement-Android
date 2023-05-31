@@ -43,10 +43,11 @@
                 style="@style/text_Style_"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="매장명"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/view_pager" />
 
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/materialDivider3"
@@ -169,15 +170,15 @@
                 android:text="세탁 신청"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent" />
-            <ImageView
-                android:id="@+id/imageView"
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_store_name"
-                tools:src="@tools:sample/avatars" />
+                app:layout_constraintTop_toTopOf="parent"
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

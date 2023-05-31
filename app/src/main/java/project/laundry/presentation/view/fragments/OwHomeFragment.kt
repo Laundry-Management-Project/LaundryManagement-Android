@@ -7,11 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import project.laundry.R
 import project.laundry.data.App
 import project.laundry.data.dataclass.AddStore
 import project.laundry.databinding.FragmentHomeOwBinding
+import project.laundry.presentation.view.StoreImagePagerAdapter
 import project.laundry.presentation.viewmodel.OwHomeViewModel
+import project.laundry.presentation.viewmodel.StoreRegisterViewModel
 
 class OwHomeFragment : Fragment() {
 
@@ -21,15 +24,26 @@ class OwHomeFragment : Fragment() {
     val buId = App.prefs.buId!!
     val userType = App.prefs.userType!!
 
-    val viewModel = OwHomeViewModel()
+
+    lateinit var viewModel : OwHomeViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeOwBinding.inflate(layoutInflater, container, false)
 
+        val viewModelProvider = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application))
+        viewModel = viewModelProvider[OwHomeViewModel::class.java]
+
+
         viewModel.loadDetail(userType, buId)
 
+        viewModel.bitmaps.observe(viewLifecycleOwner){bitmaps ->
+            if(bitmaps.isNotEmpty()){
+                binding.viewPager.adapter = StoreImagePagerAdapter(requireActivity(), bitmaps)
+            }
+        }
         viewModel.loading.observe(viewLifecycleOwner){isLoading->
             if(isLoading){
                 binding.progressBar.visibility= VISIBLE
