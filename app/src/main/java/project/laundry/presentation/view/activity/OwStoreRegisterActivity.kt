@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
 import android.util.Log
 import androidx.annotation.UiThread
 import androidx.lifecycle.Observer
@@ -30,7 +31,7 @@ import project.laundry.presentation.view.ImageAdapter
 import project.laundry.presentation.viewmodel.AddReservationViewModel
 import project.laundry.presentation.viewmodel.StoreRegisterViewModel
 
-class OwStoreRegisterActivity : AppCompatActivity(), OnMapReadyCallback {
+class OwStoreRegisterActivity : AppCompatActivity() {
     lateinit var binding : ActivityStoreRegisterBinding
 
     val uid = App.prefs.uid!!
@@ -52,6 +53,15 @@ class OwStoreRegisterActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
     }
+    private val childForResult2 = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        when (result.resultCode){
+            RESULT_OK -> {
+                binding.etStoreAddress.text = Editable.Factory.getInstance().newEditable(result.data?.getStringExtra("address"))
+            }
+        }
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -76,39 +86,36 @@ class OwStoreRegisterActivity : AppCompatActivity(), OnMapReadyCallback {
 
         setContentView(binding.root)
 
-        fun init_webViewDialog(){
-            val builder = MaterialAlertDialogBuilder(this)
-
-            val viewGroup = findViewById<ViewGroup>(android.R.id.content)
-            val view = LayoutInflater.from(this).inflate(R.layout.dialog_webview, viewGroup, false)
-
-            val webView = view.findViewById<WebView>(R.id.web_view)
-
-            webView.apply {
-                settings.apply {
-                    javaScriptEnabled = true
-                    javaScriptCanOpenWindowsAutomatically = true
-                    domStorageEnabled = true
-                }
-//                webChromeClient
-//                webViewClient
-//                addJavascriptInterface()
-                loadUrl("https://laundry-management-ywsj-team.koyeb.app/roadSearch.html")
-
-            }
-
-            builder.apply {
-                setView(view)
-            }
-
-            builder.show()
-
-        }
+//        fun init_webViewDialog(){
+//            val builder = MaterialAlertDialogBuilder(this)
+//
+//            val viewGroup = findViewById<ViewGroup>(android.R.id.content)
+//            val view = LayoutInflater.from(this).inflate(R.layout.dialog_webview, viewGroup, false)
+//
+//            val webView = view.findViewById<WebView>(R.id.web_view)
+//
+//            webView.apply {
+//                settings.apply {
+//                    javaScriptEnabled = true
+//                    javaScriptCanOpenWindowsAutomatically = true
+//                    domStorageEnabled = true
+//                }
+////                webChromeClient
+////                webViewClient
+////                addJavascriptInterface()
+//                loadUrl("https://laundry-management-ywsj-team.koyeb.app/roadSearch.html")
+//
+//            }
+//
+//            builder.apply {
+//                setView(view)
+//            }
+//
+//            builder.show()
+//
+//        }
     }
-    @UiThread
-    override fun onMapReady(_naverMap: NaverMap) {
 
-    }
     private fun initView(){
         binding = ActivityStoreRegisterBinding.inflate(layoutInflater)
 
@@ -116,12 +123,6 @@ class OwStoreRegisterActivity : AppCompatActivity(), OnMapReadyCallback {
         binding.topAppBar.setNavigationOnClickListener {
             onBackPressed()
         }
-        val fm = supportFragmentManager
-//        val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
-//            ?: MapFragment.newInstance().also {
-//                fm.beginTransaction().add(R.id.map, it).commit()
-//            }
-//        mapFragment?.getMapAsync(this)
 
         binding.btnRegister.setOnClickListener {
             val addStoreDto = AddStore(
@@ -138,6 +139,11 @@ class OwStoreRegisterActivity : AppCompatActivity(), OnMapReadyCallback {
         binding.btnAddImage.setOnClickListener {
             val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             childForResult.launch(galleryIntent)
+        }
+
+        binding.startMap.setOnClickListener {
+            val intent = Intent(this, NaverMapActivity::class.java)
+            childForResult2.launch(intent)
         }
     }
 }

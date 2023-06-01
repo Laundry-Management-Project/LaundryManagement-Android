@@ -74,6 +74,7 @@ dependencies {
 
     //naver map api
     implementation('com.naver.maps:map-sdk:3.16.2')
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
 
     //aws s3
     implementation 'com.amazonaws:aws-android-sdk-mobile-client:2.13.5'

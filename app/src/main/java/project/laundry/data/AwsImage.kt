@@ -84,8 +84,6 @@ class AwsImage(val context:Context) {
                     })
                     i++
                 }
-                // /external/images/ 와 같은 경로는 바로 s3에 업로드 불가능으로 인해 변환
-
             }
         }
     }
@@ -109,10 +107,9 @@ class AwsImage(val context:Context) {
 
             var bitmap: Bitmap
             val objectKey = s3Object.key
-            val file = File(context.filesDir.path + "/"+objectKey)
+            val file = File(context.filesDir.path, objectKey)
             val downloadObserver = transferUtility.download(mBucketName, objectKey, file)
 
-            Log.d("getImage1", s3Objects.size.toString())
             downloadObserver.setTransferListener(object : TransferListener {
                 override fun onStateChanged(id: Int, state: TransferState) {
                     if (state == TransferState.COMPLETED) {

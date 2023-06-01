@@ -19,18 +19,18 @@ class StoreDetailViewModel(application: Application) : AndroidViewModel(applicat
 
     val bitmaps = MutableLiveData<List<Bitmap>>()
     fun loadDetail(userType:String, sid:String){
-        loading.value=true
+//        loading.value=true
 
         val awsImage = AwsImage(ctx)
         viewModelScope.launch {
-            bitmaps.postValue(awsImage.getImage(sid))
+            bitmaps.postValue(awsImage.getImage("jun"))
         }
-        rep.getStoreDetail(userType, sid){ response ->
-            response?.let{
-                store.value = response
-            }
-            loading.value=false
-        }
+//        rep.getStoreDetail(userType, sid){ response ->
+//            response?.let{
+//                store.value = response
+//            }
+//            loading.value=false
+//        }
     }
 
     fun putStoreDetail(){
